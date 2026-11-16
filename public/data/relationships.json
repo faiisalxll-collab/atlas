@@ -1,0 +1,50 @@
+[
+  {
+    "id": "rel-gateway-kars",
+    "source": "agentgateway__agentgateway",
+    "target": "kars_59a3e952",
+    "kind": "shared_technology",
+    "labelAr": "اشتراك في MCP وA2A",
+    "labelEn": "Shared MCP & A2A Protocols",
+    "reasonAr": "كلا المستودعين يدعم بروتوكولي MCP وA2A لتوجيه وتأمين اتصالات وكلاء الذكاء الاصطناعي وتطبيق السياسات.",
+    "reasonEn": "Both projects implement MCP and A2A protocols for routing, policy enforcement, and securing AI agent communications.",
+    "evidenceSource": "وصف الجدول (ورقة المستودعات - صف 3 وصف 7)",
+    "verifiedAt": "2026-11-16"
+  },
+  {
+    "id": "rel-containarium-space",
+    "source": "containarium_622c54c0",
+    "target": "space_0803df4f",
+    "kind": "functional_similarity",
+    "labelAr": "تشابه وظيفي (بيئات معزولة)",
+    "labelEn": "Functional Similarity (Sandboxes)",
+    "reasonAr": "كلاهما يعزل تنفيذ أكواد الوكلاء عن المضيف عبر بيئات Linux مستقلة (LXC/Kubernetes في Containarium مقابل Firecracker microVM في SPACE).",
+    "reasonEn": "Both isolate agent code execution from the host via dedicated Linux environments (LXC/K8s vs Firecracker microVM).",
+    "evidenceSource": "وصف الجدول (ورقة المستودعات - صف 6 وصف 8)",
+    "verifiedAt": "2026-11-16"
+  },
+  {
+    "id": "rel-agensh-aspen",
+    "source": "agensh_9bfe872d",
+    "target": "aspen_5707d86c",
+    "kind": "proposed_integration",
+    "labelAr": "تكامل مقترح للتوازي",
+    "labelEn": "Proposed Parallelism Pairing",
+    "reasonAr": "Agensh ينسق عمل عدة وكلاء برمجة بالتوازي، بينما صُمم Aspen لمعالجة اختناقات Git عند دفع وجلب التغييرات من أعداد كبيرة من الوكلاء.",
+    "reasonEn": "Agensh coordinates parallel coding agents while Aspen addresses Git bottlenecks under high parallel agent push/pull load.",
+    "evidenceSource": "تحليل وظيفي مستند إلى وصف الجدول (صف 4 وصف 5)",
+    "verifiedAt": "2026-11-16"
+  },
+  {
+    "id": "rel-goose-hindsight",
+    "source": "block__goose",
+    "target": "hindsight_f73d2c94",
+    "kind": "proposed_integration",
+    "labelAr": "تكامل مقترح (وكيل + ذاكرة)",
+    "labelEn": "Proposed Pairing (Agent + Memory)",
+    "reasonAr": "Goose وكيل محلي قابل للتوسعة عبر MCP، وHindsight يوفر ذاكرة طويلة المدى لاحتفاظ الوكلاء بالسياق عبر الجلسات.",
+    "reasonEn": "Goose is a local MCP-extensible agent, while Hindsight provides long-term cross-session memory for agents.",
+    "evidenceSource": "تحليل وظيفي مستند إلى وصف الجدول (صف 14 وصف 17)",
+    "verifiedAt": "2026-11-16"
+  }
+]

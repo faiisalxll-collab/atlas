@@ -1,0 +1,90 @@
+[
+  {
+    "id": "trail-isolated-infra",
+    "titleAr": "بناء بنية تحتية معزولة وآمنة لوكلاء البرمجة",
+    "titleEn": "Isolated & Policy-Controlled Agent Infrastructure",
+    "goalAr": "تشغيل وكلاء الذكاء الاصطناعي داخل بيئات معزولة مع مراقبة الشاشة والتحكم بالسياسات.",
+    "goalEn": "Run coding agents inside isolated sandboxes with browser monitoring and policy routing.",
+    "steps": [
+      {
+        "repoId": "agentgateway__agentgateway",
+        "roleAr": "توحيد بوابات الاتصال (LLM / MCP / A2A) ومراقبة التكلفة والمصادقة.",
+        "roleEn": "Unify LLM, MCP, and A2A routing with auth and telemetry."
+      },
+      {
+        "repoId": "containarium_622c54c0",
+        "roleAr": "توفير صندوق Linux معزول ودائم للوكيل مع سياسات خروج شبكي eBPF.",
+        "roleEn": "Provide persistent isolated Linux sandboxes with eBPF network policies."
+      },
+      {
+        "repoId": "space_0803df4f",
+        "roleAr": "عزل المهام عالية الخطورة داخل أجهزة افتراضية مصغرة Firecracker microVM.",
+        "roleEn": "Isolate untrusted execution inside ephemeral Firecracker microVMs."
+      },
+      {
+        "repoId": "voxl_42dfb8a0",
+        "roleAr": "بث ومراقبة جلسة سطح المكتب التي يعمل عليها الوكيل مباشرة عبر المتصفح.",
+        "roleEn": "Stream and supervise the agent desktop session in the browser."
+      }
+    ],
+    "compatibilityNoteAr": "تنبيه: كل مستودع يمثل لبنة مستقلة في هذه الفئة؛ راجع متطلبات التشغيل قبل الدمج المباشر.",
+    "compatibilityNoteEn": "Note: Each repository is an independent building block; verify deployment specs before combining."
+  },
+  {
+    "id": "trail-multi-agent-dev",
+    "titleAr": "تنسيق وتقييم فرق وكلاء البرمجة المتوازية",
+    "titleEn": "Parallel Multi-Agent Coordination & Evaluation",
+    "goalAr": "تشغيل عدة وكلاء على مستودع برمجي مع التحقق من النتائج وتقييم الإعدادات.",
+    "goalEn": "Coordinate parallel coding agents with verification checks and harness evaluation.",
+    "steps": [
+      {
+        "repoId": "agensh_9bfe872d",
+        "roleAr": "تنسيق وكلاء البرمجة بشكل لامركزي عبر مساحة عمل مشتركة.",
+        "roleEn": "Coordinate decentralized coding agents across a shared workspace."
+      },
+      {
+        "repoId": "aspen_5707d86c",
+        "roleAr": "استيعاب عمليات الدفع والجلب المتوازية لـ Git دون اختناقات.",
+        "roleEn": "Handle high-concurrency Git push/pull operations from parallel agents."
+      },
+      {
+        "repoId": "agent8088_5b539d7f",
+        "roleAr": "إلزام الوكيل بفحص الملفات وتشغيل الاختبارات قبل إعلان إكمال المهمة.",
+        "roleEn": "Enforce file and test verification gates before task completion."
+      },
+      {
+        "repoId": "harness_961cbba6",
+        "roleAr": "قياس ومقارنة إعدادات الوكيل والذاكرة والأدوات بالأدلة.",
+        "roleEn": "Benchmark and refine agent harness configurations empirically."
+      }
+    ],
+    "compatibilityNoteAr": "تنبيه: يتضمن المسار مشاريع بحثية وأولية (مثل Aspen pre-alpha وHarness²).",
+    "compatibilityNoteEn": "Note: Includes research and pre-alpha tools (such as Aspen and Harness²)."
+  },
+  {
+    "id": "trail-local-workflow",
+    "titleAr": "وكيل برمجة محلي بذاكرة مستديمة وتحكم عن بُعد",
+    "titleEn": "Local Coding Agent with Memory & Mobile Control",
+    "goalAr": "إدارة وكيل محلي وتكليفه بالمهام عن بُعد مع الاحتفاظ بالسياق عبر الجلسات.",
+    "goalEn": "Run a local agent with cross-session memory and remote mobile approvals.",
+    "steps": [
+      {
+        "repoId": "block__goose",
+        "roleAr": "تشغيل الوكيل محليًا عبر CLI أو سطح المكتب مع دعم إضافات MCP.",
+        "roleEn": "Run a local open-source coding agent via CLI or Desktop with MCP."
+      },
+      {
+        "repoId": "hindsight_f73d2c94",
+        "roleAr": "حفظ السياق والدروس المستفادة عبر جلسات العمل المتعددة.",
+        "roleEn": "Retain long-term context and learned decisions across sessions."
+      },
+      {
+        "repoId": "codync_1746ac8b",
+        "roleAr": "متابعة تقدم الوكيل والموافقة على التعديلات من تطبيق iPhone.",
+        "roleEn": "Monitor agent progress and approve steps remotely from iPhone."
+      }
+    ],
+    "compatibilityNoteAr": "تنبيه: الربط بين الأدوات يتم عبر بروتوكولات MCP/ACP القياسية.",
+    "compatibilityNoteEn": "Note: Interoperability relies on standard MCP/ACP configurations."
+  }
+]

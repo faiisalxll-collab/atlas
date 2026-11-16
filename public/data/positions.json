@@ -1,0 +1,157 @@
+{
+  "domains": {
+    "Intelligence": [
+      28.0,
+      12.0,
+      18.0
+    ],
+    "Infrastructure": [
+      -28.0,
+      14.0,
+      16.0
+    ],
+    "Engineering": [
+      0.0,
+      -28.0,
+      22.0
+    ],
+    "Perception": [
+      32.0,
+      -14.0,
+      -18.0
+    ],
+    "Creative Systems": [
+      -32.0,
+      -16.0,
+      -16.0
+    ],
+    "Security": [
+      16.0,
+      28.0,
+      -24.0
+    ],
+    "Frontier Research": [
+      -18.0,
+      26.0,
+      -26.0
+    ]
+  },
+  "categories": {
+    "Agent Infrastructure": {
+      "domain": "Infrastructure",
+      "x": -28.0,
+      "y": 25.5,
+      "z": 16.0
+    },
+    "AI Agents": {
+      "domain": "Intelligence",
+      "x": 28.0,
+      "y": 23.5,
+      "z": 18.0
+    },
+    "AI Memory": {
+      "domain": "Intelligence",
+      "x": 28.0,
+      "y": 0.5,
+      "z": 18.0
+    }
+  },
+  "repositories": {
+    "agent8088_5b539d7f": {
+      "category": "Agent Infrastructure",
+      "x": -28.0,
+      "y": 33.0,
+      "z": 16.0
+    },
+    "agentgateway__agentgateway": {
+      "category": "Agent Infrastructure",
+      "x": -28.862,
+      "y": 30.857,
+      "z": 21.178
+    },
+    "agensh_9bfe872d": {
+      "category": "Agent Infrastructure",
+      "x": -26.017,
+      "y": 28.714,
+      "z": 9.52
+    },
+    "aspen_5707d86c": {
+      "category": "Agent Infrastructure",
+      "x": -21.741,
+      "y": 26.571,
+      "z": 12.008
+    },
+    "containarium_622c54c0": {
+      "category": "Agent Infrastructure",
+      "x": -26.582,
+      "y": 24.429,
+      "z": 23.286
+    },
+    "kars_59a3e952": {
+      "category": "Agent Infrastructure",
+      "x": -23.087,
+      "y": 22.286,
+      "z": 20.667
+    },
+    "space_0803df4f": {
+      "category": "Agent Infrastructure",
+      "x": -25.064,
+      "y": 20.143,
+      "z": 11.649
+    },
+    "voxl_42dfb8a0": {
+      "category": "Agent Infrastructure",
+      "x": -28.0,
+      "y": 18.0,
+      "z": 16.0
+    },
+    "coopanything_c140e7d9": {
+      "category": "AI Agents",
+      "x": 28.0,
+      "y": 31.0,
+      "z": 18.0
+    },
+    "codync_1746ac8b": {
+      "category": "AI Agents",
+      "x": 33.044,
+      "y": 28.5,
+      "z": 15.591
+    },
+    "craftanything_5df4caff": {
+      "category": "AI Agents",
+      "x": 23.363,
+      "y": 26.0,
+      "z": 23.339
+    },
+    "dshsuperagentprototype_1eb24e8b": {
+      "category": "AI Agents",
+      "x": 24.652,
+      "y": 23.5,
+      "z": 11.289
+    },
+    "block__goose": {
+      "category": "AI Agents",
+      "x": 34.409,
+      "y": 21.0,
+      "z": 15.012
+    },
+    "harness_961cbba6": {
+      "category": "AI Agents",
+      "x": 30.316,
+      "y": 18.5,
+      "z": 12.912
+    },
+    "openduet_3dd6f510": {
+      "category": "AI Agents",
+      "x": 28.0,
+      "y": 16.0,
+      "z": 18.0
+    },
+    "hindsight_f73d2c94": {
+      "category": "AI Memory",
+      "x": 28.0,
+      "y": 8.0,
+      "z": 18.0
+    }
+  }
+}
