@@ -1,0 +1,45 @@
+name: Import ATLAS ZIP (one time)
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'atlas-reviewed.zip'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Extract reviewed ATLAS archive safely
+        run: |
+          python3 - <<'PY'
+          import zipfile, pathlib
+          archive = pathlib.Path('atlas-reviewed.zip')
+          if not archive.exists():
+              raise SystemExit('Upload atlas-reviewed.zip to the repository root first')
+          with zipfile.ZipFile(archive) as z:
+              for info in z.infolist():
+                  name = pathlib.PurePosixPath(info.filename)
+                  if not name.parts or name.parts[0] != 'atlas':
+                      raise SystemExit(f'Unexpected archive path: {info.filename}')
+                  parts = name.parts[1:]
+                  if not parts or info.is_dir():
+                      continue
+                  if '..' in parts or any(part.startswith('/') for part in parts):
+                      raise SystemExit(f'Unsafe path: {info.filename}')
+                  destination = pathlib.Path(*parts)
+                  destination.parent.mkdir(parents=True, exist_ok=True)
+                  destination.write_bytes(z.read(info))
+          archive.unlink()
+          PY
+      - name: Commit extracted source
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "feat: import ATLAS application source [skip ci]" || exit 0
+          git push
