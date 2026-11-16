@@ -178,6 +178,14 @@ def update_incremental_positions(
                 "z": round(cpos["z"] + oz, 3),
             }
 
+    # Incremental imports can reuse a pole on the placement sphere. Keep the
+    # earlier point fixed and give the later item a distinct, stable position.
+    for group in ("categories", "repositories"):
+        occupied = set()
+        for item in positions[group].values():
+            while (item["x"], item["y"], item["z"]) in occupied:
+                item["x"] = round(item["x"] + 1.8, 3)
+            occupied.add((item["x"], item["y"], item["z"]))
     return positions
 
 

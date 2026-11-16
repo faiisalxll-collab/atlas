@@ -36,11 +36,27 @@ try {
           };
         });
         await page.goto('http://127.0.0.1:' + server.address().port + '/atlas/');
-        console.log(engine.name(), forceList, await page.locator("body").innerText().then(text => text.slice(0, 180)));
+
         if (forceList) {
           await page.locator('.atlas-list-card').first().tap();
         } else {
-          await page.locator('[data-node-id="dom:Intelligence"]').tap();
+          const domain = page.locator('[data-node-id="dom:Intelligence"]');
+          await domain.waitFor();
+          const canvas = page.locator('#universe-canvas');
+          const centerLit = await canvas.evaluate(el => new Promise(done => requestAnimationFrame(() => {
+            const gl = el.getContext('webgl2');
+            const rgba = new Uint8Array(4);
+            gl.readPixels(el.width >> 1, el.height >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, rgba);
+            done(rgba[0] > 70);
+          })));
+          assert.ok(centerLit, 'ATLAS core should be visible at screen center');
+          const position = () => domain.evaluate(el => el.style.transform);
+          const before = await position();
+          await page.locator('#ctrl-zoom-in').tap();
+          await page.waitForFunction(old => document.querySelector('[data-node-id="dom:Intelligence"]').style.transform !== old, before);
+          await page.locator('#ctrl-zoom-out').tap();
+          await page.locator('#ctrl-reset').tap();
+          await domain.tap();
           await page.locator('.tier-category:visible').first().tap();
           await page.locator('.tier-repository:visible').first().tap();
         }
