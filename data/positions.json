@@ -117,7 +117,7 @@
     },
     "Browser Agents": {
       "domain": "Intelligence",
-      "x": 28.0,
+      "x": 29.8,
       "y": 0.5,
       "z": 18.0
     },
@@ -323,7 +323,7 @@
     },
     "paperclipai__paperclip": {
       "category": "AI Agents",
-      "x": 28.0,
+      "x": 29.8,
       "y": 16.0,
       "z": 18.0
     },
@@ -371,7 +371,7 @@
     },
     "dotstell__dotstell": {
       "category": "AI Memory",
-      "x": 28.0,
+      "x": 29.8,
       "y": 8.0,
       "z": 18.0
     },
@@ -449,7 +449,7 @@
     },
     "lvcidpsyche__auto-browser": {
       "category": "Browser Agents",
-      "x": 28.0,
+      "x": 31.6,
       "y": 8.0,
       "z": 18.0
     },
