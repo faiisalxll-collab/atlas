@@ -50,15 +50,34 @@ try {
             done(rgba[0] > 70);
           })));
           assert.ok(centerLit, 'ATLAS core should be visible at screen center');
-          const position = () => domain.evaluate(el => el.style.transform);
+          const projection = () => Array.from(document.querySelectorAll('.tier-domain')).map(el => [el.style.display, el.style.transform]).flat().join('|');
+          const position = () => page.evaluate(projection);
           const before = await position();
           await page.locator('#ctrl-zoom-in').tap();
-          await page.waitForFunction(old => document.querySelector('[data-node-id="dom:Intelligence"]').style.transform !== old, before);
+          await page.waitForFunction(old => Array.from(document.querySelectorAll('.tier-domain')).map(el => [el.style.display, el.style.transform]).flat().join('|') !== old, before);
           await page.locator('#ctrl-zoom-out').tap();
           await page.locator('#ctrl-reset').tap();
+          const canvasBox = await canvas.boundingBox();
+          const x = canvasBox.x + canvasBox.width * 0.48;
+          const y = canvasBox.y + canvasBox.height * 0.68;
+          const orbitStart = await position();
+          await page.mouse.move(x, y);
+          await page.mouse.down();
+          await page.mouse.move(x + 45, y - 15, { steps: 5 });
+          await page.mouse.up();
+          await page.waitForFunction(old => Array.from(document.querySelectorAll('.tier-domain')).map(el => [el.style.display, el.style.transform]).flat().join('|') !== old, orbitStart);
+          // Start the hierarchy test in its initial viewing direction.
+          await page.reload();
           await domain.tap();
           await page.locator('.tier-category:visible').first().tap();
-          await page.locator('.tier-repository:visible').first().tap();
+          const star = page.locator('.tier-repository:visible').first();
+          await star.waitFor();
+          // Labels sit ten CSS pixels below their projected star centers.
+          const box = await star.boundingBox();
+          const starName = await star.textContent();
+          await page.touchscreen.tap(box.x + box.width / 2, box.y - 10);
+          await page.locator('.atlas-inspector h2').waitFor();
+          assert.equal(await page.locator('.atlas-inspector h2').textContent(), starName);
         }
         await page.locator('.atlas-inspector h2').waitFor();
         await page.locator('#btn-close-inspector').tap();
