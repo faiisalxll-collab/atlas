@@ -465,9 +465,7 @@ export class UniverseScene {
       this.controls.minDistance,
       this.controls.maxDistance
     );
-    offset.normalize().multiplyScalar(nextDist);
-    this.camGoalTarget = this.controls.target.clone();
-    this.camGoalPos = this.controls.target.clone().add(offset);
+    this.flyToPosition(this.controls.target, nextDist);
   }
 
   public flyToPosition(target: Position3D, distance: number): void {
@@ -792,6 +790,11 @@ export class UniverseScene {
     const height = window.innerHeight;
     const camDist = this.camera.position.distanceTo(this.controls.target);
 
+    const topbar = document.querySelector('.atlas-topbar')?.getBoundingClientRect();
+    const subbar = document.querySelector('.atlas-subbar')?.getBoundingClientRect();
+    const labelTop = Math.max(topbar?.bottom ?? 0, subbar?.bottom ?? 0) + 4;
+    const labelBottom = (document.querySelector('.atlas-controls-dock')?.getBoundingClientRect().top ?? height) - 34;
+
     // Collision avoidance grid (screen-space bounding boxes)
     const placedBoxes: Array<{ left: number; right: number; top: number; bottom: number }> = [];
 
@@ -830,7 +833,7 @@ export class UniverseScene {
       const sx = (this.projVec.x * 0.5 + 0.5) * width;
       const sy = (-this.projVec.y * 0.5 + 0.5) * height;
 
-      if (sx < -40 || sx > width + 40 || sy < 48 || sy > height - 48) {
+      if (sx < 0 || sx > width || sy < labelTop || sy > labelBottom) {
         el.style.display = 'none';
         continue;
       }

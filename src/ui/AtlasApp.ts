@@ -61,6 +61,13 @@ export class AtlasApp {
           },
         });
         this.scene.setLanguage(this.lang);
+        canvas.addEventListener('webglcontextlost', () => {
+          this.scene?.dispose();
+          this.scene = null;
+          labelsLayer.replaceChildren();
+          this.viewMode = 'list';
+          this.renderHud();
+        }, { once: true });
         return;
       } catch {
         labelsLayer.replaceChildren();

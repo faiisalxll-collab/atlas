@@ -433,3 +433,13 @@ body,
     overflow-x: auto;
   }
 }
+
+@media (max-width: 768px) {
+  .atlas-topbar { gap: 5px; padding: 6px 10px; }
+  .atlas-actions { flex-wrap: nowrap; overflow-x: auto; }
+  .atlas-actions button, .atlas-controls-dock button { flex: none; white-space: nowrap; }
+  .atlas-controls-dock { width: max-content; justify-content: start; }
+  .atlas-trails-bar, .atlas-trails-bar select { max-width: 100%; min-width: 0; }
+  .atlas-listview-overlay { top: 154px; }
+  .atlas-search-input { font-size: 16px; }
+}
