@@ -36,6 +36,7 @@ try {
           };
         });
         await page.goto('http://127.0.0.1:' + server.address().port + '/atlas/');
+        console.log(engine.name(), forceList, await page.locator("body").innerText().then(text => text.slice(0, 180)));
         if (forceList) {
           await page.locator('.atlas-list-card').first().tap();
         } else {
