@@ -55,7 +55,8 @@ jobs:
           path: dist
       - name: Publish tested files to the Pages source
         run: |
-          rsync -a --delete --exclude='.git/' --exclude='.nojekyll' dist/ site/
+          rsync -a --checksum --delete --exclude='.git/' --exclude='.nojekyll' dist/ site/
+          diff -qr --exclude=.git --exclude=.nojekyll dist site
           touch site/.nojekyll
           cd site
           git config user.name "github-actions[bot]"
@@ -65,6 +66,7 @@ jobs:
             git commit -m "Publish tested ATLAS build from ${GITHUB_SHA}"
             git push origin HEAD:gh-pages
           fi
+          git show HEAD:data/metadata.json | cmp - ../dist/data/metadata.json
       - name: Request Pages build and verify deployed catalog
         env:
           GH_TOKEN: ${{ github.token }}
