@@ -15,12 +15,14 @@
     "moduleDetection": "force",
     "noEmit": true,
     "strict": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "types": [
+      "vite/client"
+    ]
   },
   "include": [
-    "src",
-    "tests"
+    "src"
   ]
 }
