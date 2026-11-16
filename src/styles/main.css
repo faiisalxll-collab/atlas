@@ -28,7 +28,7 @@ body,
   color: var(--text-primary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  touch-action: none;
+  touch-action: auto;
 }
 
 #universe-canvas {
@@ -91,7 +91,7 @@ body,
   position: fixed;
   top: 12px;
   inset-inline: 12px;
-  z-index: 10;
+  z-index: 18;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -394,6 +394,9 @@ body,
 }
 
 .atlas-list-card {
+  color: inherit;
+  text-align: start;
+  font: inherit;
   background: rgba(5, 6, 8, 0.75);
   border: 1px solid var(--border-subtle);
   border-radius: 12px;

@@ -5,12 +5,16 @@ import type {
   RepositoryRecord,
   UniverseDataset,
   ViewMode,
-  ZoomTier,
 } from '../data/types';
 import { GraphEngine, type SpatialNode } from '../graph/GraphEngine';
 import { UniverseScene } from '../scene/UniverseScene';
 import { SearchEngine } from '../features/SearchEngine';
 import { buildShareableUrl, parseHashState, updateHashState } from '../features/DeepLinks';
+
+function escapeHtml(value: unknown): string {
+  return String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+}
 
 export class AtlasApp {
   private dataset: UniverseDataset;
@@ -28,17 +32,14 @@ export class AtlasApp {
   private showConnections = false;
   private recentFilterDays: number | null = null;
   private hudVisible = true;
-  private zoomTier: ZoomTier = 'universe';
 
   private hudRoot: HTMLElement;
-  private fallbackRoot: HTMLElement;
 
   constructor(dataset: UniverseDataset) {
     this.dataset = dataset;
     this.graphEngine = new GraphEngine(dataset);
     this.searchEngine = new SearchEngine(dataset.repositories);
     this.hudRoot = document.getElementById('hud-root')!;
-    this.fallbackRoot = document.getElementById('fallback-root')!;
 
     this.initSceneOrFallback();
     this.renderHud();
@@ -50,19 +51,22 @@ export class AtlasApp {
     const canvas = document.getElementById('universe-canvas') as HTMLCanvasElement | null;
     const labelsLayer = document.getElementById('labels-layer');
 
-    if (canvas && labelsLayer && UniverseScene.isWebGLAvailable()) {
-      this.scene = new UniverseScene(canvas, labelsLayer, this.graphEngine, {
-        onSelectNode: (node) => this.handleNodeSelected(node),
-        onDeselect: () => this.clearSelection(),
-        onCameraZoomTierChange: (tier) => {
-          this.zoomTier = tier;
-        },
-      });
-      this.scene.setLanguage(this.lang);
-    } else {
-      // Automatic accessible fallback when WebGL is unavailable
-      this.viewMode = 'list';
+    if (canvas && labelsLayer) {
+      try {
+        this.scene = new UniverseScene(canvas, labelsLayer, this.graphEngine, {
+          onSelectNode: (node) => this.handleNodeSelected(node),
+          onDeselect: () => this.clearSelection(),
+          onCameraZoomTierChange: (tier) => {
+            canvas.dataset.zoomTier = tier;
+          },
+        });
+        this.scene.setLanguage(this.lang);
+        return;
+      } catch {
+        labelsLayer.replaceChildren();
+      }
     }
+    this.viewMode = 'list';
   }
 
   private applyInitialDeepLink(): void {
@@ -175,7 +179,7 @@ export class AtlasApp {
           <span class="atlas-logo-dot"></span>
           <span class="atlas-title">ATLAS</span>
           <span class="atlas-badge">${totalCount} ${isAr ? 'مستودع' : 'Stars'}</span>
-          <span class="atlas-badge" title="Last Sync">${syncDate}</span>
+          <span class="atlas-badge" title="Last Sync">${escapeHtml(syncDate)}</span>
         </div>
 
         <div class="atlas-search-wrap">
@@ -194,7 +198,7 @@ export class AtlasApp {
           <button type="button" class="atlas-btn ${this.recentFilterDays === 7 ? 'is-active' : ''}" id="btn-new-stars">
             ${isAr ? '✨ أحدث الإضافات (7 أيام)' : '✨ New Stars (7d)'}
           </button>
-          <button type="button" class="atlas-btn ${this.viewMode === '3d' ? 'is-active' : ''}" id="btn-view-3d">3D</button>
+          <button type="button" class="atlas-btn ${this.viewMode === '3d' ? 'is-active' : ''}" id="btn-view-3d" ${this.scene ? '' : 'disabled'}>3D</button>
           <button type="button" class="atlas-btn ${this.viewMode === 'list' ? 'is-active' : ''}" id="btn-view-list">
             ${isAr ? 'القائمة' : 'List'}
           </button>
@@ -210,9 +214,9 @@ export class AtlasApp {
       <div class="atlas-subbar">
         <nav class="atlas-breadcrumb" aria-label="Breadcrumb">
           <button type="button" class="atlas-crumb-btn" id="crumb-root">ATLAS</button>
-          ${this.activeDomain ? `<span>/</span><button type="button" class="atlas-crumb-btn" id="crumb-domain">${this.activeDomain}</button>` : ''}
-          ${this.activeCategory ? `<span>/</span><button type="button" class="atlas-crumb-btn" id="crumb-category">${this.activeCategory}</button>` : ''}
-          ${this.selectedRepo ? `<span>/</span><span class="atlas-crumb-btn current">${this.selectedRepo.name}</span>` : ''}
+          ${this.activeDomain ? `<span>/</span><button type="button" class="atlas-crumb-btn" id="crumb-domain">${escapeHtml(this.activeDomain)}</button>` : ''}
+          ${this.activeCategory ? `<span>/</span><button type="button" class="atlas-crumb-btn" id="crumb-category">${escapeHtml(this.activeCategory)}</button>` : ''}
+          ${this.selectedRepo ? `<span>/</span><span class="atlas-crumb-btn current">${escapeHtml(this.selectedRepo.name)}</span>` : ''}
         </nav>
 
         <div class="atlas-trails-bar">
@@ -224,8 +228,8 @@ export class AtlasApp {
             ${this.dataset.trails
               .map(
                 (t) =>
-                  `<option value="${t.id}" ${this.activeTrail?.id === t.id ? 'selected' : ''}>${
-                    isAr ? t.titleAr : t.titleEn
+                  `<option value="${escapeHtml(t.id)}" ${this.activeTrail?.id === t.id ? 'selected' : ''}>${
+                    escapeHtml(isAr ? t.titleAr : t.titleEn)
                   }</option>`
               )
               .join('')}
@@ -263,14 +267,14 @@ export class AtlasApp {
     const rels = this.graphEngine.relationshipsByRepo.get(r.id) ?? [];
 
     return `
-      <aside class="atlas-inspector" role="dialog" aria-label="${r.name}">
+      <aside class="atlas-inspector" role="dialog" aria-label="${escapeHtml(r.name)}">
         <div class="atlas-inspector-header">
           <div>
-            <span class="atlas-badge">${r.domain} / ${r.category}</span>
-            <h2 style="font-size: 18px; margin-top: 6px; font-family: var(--font-mono);">${r.name}</h2>
+            <span class="atlas-badge">${escapeHtml(r.domain)} / ${escapeHtml(r.category)}</span>
+            <h2 style="font-size: 18px; margin-top: 6px; font-family: var(--font-mono);">${escapeHtml(r.name)}</h2>
             ${
               r.addedAt
-                ? `<small style="color: var(--text-secondary);">${isAr ? 'تاريخ الإضافة:' : 'Added:'} ${r.addedAt}</small>`
+                ? `<small style="color: var(--text-secondary);">${isAr ? 'تاريخ الإضافة:' : 'Added:'} ${escapeHtml(r.addedAt)}</small>`
                 : ''
             }
           </div>
@@ -283,8 +287,8 @@ export class AtlasApp {
               ? `
             <div class="atlas-rel-card" style="border-color: var(--accent-sand);">
               <span class="atlas-rel-badge">${isAr ? 'محطة ضمن المسار' : 'Trail Station'} (${this.trailStepIndex + 1}/${this.activeTrail.steps.length})</span>
-              <p>${isAr ? this.activeTrail.steps[this.trailStepIndex]?.roleAr : this.activeTrail.steps[this.trailStepIndex]?.roleEn}</p>
-              <small style="color: var(--text-secondary);">${isAr ? this.activeTrail.compatibilityNoteAr : this.activeTrail.compatibilityNoteEn}</small>
+              <p>${escapeHtml(isAr ? this.activeTrail.steps[this.trailStepIndex]?.roleAr : this.activeTrail.steps[this.trailStepIndex]?.roleEn)}</p>
+              <small style="color: var(--text-secondary);">${escapeHtml(isAr ? this.activeTrail.compatibilityNoteAr : this.activeTrail.compatibilityNoteEn)}</small>
               <div style="display:flex; gap:6px; margin-top:6px;">
                 <button type="button" class="atlas-btn" id="btn-trail-prev" ${this.trailStepIndex === 0 ? 'disabled' : ''}>${isAr ? 'السابق' : 'Prev'}</button>
                 <button type="button" class="atlas-btn" id="btn-trail-next" ${this.trailStepIndex >= this.activeTrail.steps.length - 1 ? 'disabled' : ''}>${isAr ? 'المحطة التالية' : 'Next'}</button>
@@ -294,11 +298,11 @@ export class AtlasApp {
               : ''
           }
 
-          ${r.whatItDoes ? `<div class="atlas-field-block"><h4>${isAr ? 'وش يسوي؟' : 'What it does'}</h4><p>${r.whatItDoes}</p></div>` : ''}
-          ${r.howItHelps ? `<div class="atlas-field-block"><h4>${isAr ? 'وش يفيدك؟' : 'How it helps'}</h4><p>${r.howItHelps}</p></div>` : ''}
-          ${r.whyUnique ? `<div class="atlas-field-block"><h4>${isAr ? 'ليش مميز؟' : 'Why it is unique'}</h4><p>${r.whyUnique}</p></div>` : ''}
-          ${r.useCase ? `<div class="atlas-field-block"><h4>${isAr ? 'مثال استخدام' : 'Use Case'}</h4><p>${r.useCase}</p></div>` : ''}
-          ${r.targetAudience ? `<div class="atlas-field-block"><h4>${isAr ? 'لمن يفيد؟' : 'Target Audience'}</h4><p>${r.targetAudience}</p></div>` : ''}
+          ${r.whatItDoes ? `<div class="atlas-field-block"><h4>${isAr ? 'وش يسوي؟' : 'What it does'}</h4><p>${escapeHtml(r.whatItDoes)}</p></div>` : ''}
+          ${r.howItHelps ? `<div class="atlas-field-block"><h4>${isAr ? 'وش يفيدك؟' : 'How it helps'}</h4><p>${escapeHtml(r.howItHelps)}</p></div>` : ''}
+          ${r.whyUnique ? `<div class="atlas-field-block"><h4>${isAr ? 'ليش مميز؟' : 'Why it is unique'}</h4><p>${escapeHtml(r.whyUnique)}</p></div>` : ''}
+          ${r.useCase ? `<div class="atlas-field-block"><h4>${isAr ? 'مثال استخدام' : 'Use Case'}</h4><p>${escapeHtml(r.useCase)}</p></div>` : ''}
+          ${r.targetAudience ? `<div class="atlas-field-block"><h4>${isAr ? 'لمن يفيد؟' : 'Target Audience'}</h4><p>${escapeHtml(r.targetAudience)}</p></div>` : ''}
 
           ${
             rels.length > 0
@@ -313,11 +317,11 @@ export class AtlasApp {
                     return `
                       <div class="atlas-rel-card">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                          <strong>${peer?.name ?? peerId}</strong>
-                          <span class="atlas-rel-badge">${isAr ? rel.labelAr : rel.labelEn}</span>
+                          <strong>${escapeHtml(peer?.name ?? peerId)}</strong>
+                          <span class="atlas-rel-badge">${escapeHtml(isAr ? rel.labelAr : rel.labelEn)}</span>
                         </div>
-                        <p style="font-size:12px; color:var(--text-secondary);">${isAr ? rel.reasonAr : rel.reasonEn}</p>
-                        <small style="color:var(--text-muted);">${isAr ? 'المصدر:' : 'Evidence:'} ${rel.evidenceSource}</small>
+                        <p style="font-size:12px; color:var(--text-secondary);">${escapeHtml(isAr ? rel.reasonAr : rel.reasonEn)}</p>
+                        <small style="color:var(--text-muted);">${isAr ? 'المصدر:' : 'Evidence:'} ${escapeHtml(rel.evidenceSource)}</small>
                       </div>
                     `;
                   })
@@ -332,7 +336,7 @@ export class AtlasApp {
         <div class="atlas-inspector-footer">
           ${
             r.githubUrl
-              ? `<a class="atlas-primary-link" href="${r.githubUrl}" target="_blank" rel="noopener noreferrer">Open GitHub ↗</a>`
+              ? `<a class="atlas-primary-link" href="${escapeHtml(r.githubUrl)}" target="_blank" rel="noopener noreferrer">Open GitHub ↗</a>`
               : ''
           }
           <button type="button" class="atlas-btn" id="btn-copy-link">${isAr ? 'نسخ الرابط المباشر' : 'Copy Link'}</button>
@@ -361,14 +365,14 @@ export class AtlasApp {
           ${items
             .map(
               (repo) => `
-            <article class="atlas-list-card" data-repo-id="${repo.id}">
+            <button type="button" class="atlas-list-card" data-repo-id="${escapeHtml(repo.id)}">
               <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong style="font-family:var(--font-mono);">${repo.name}</strong>
-                <span class="atlas-badge">${repo.category}</span>
+                <strong style="font-family:var(--font-mono);">${escapeHtml(repo.name)}</strong>
+                <span class="atlas-badge">${escapeHtml(repo.category)}</span>
               </div>
-              <p style="font-size:12.5px; color:var(--text-secondary);">${repo.whatItDoes}</p>
-              ${repo.addedAt ? `<small style="color:var(--text-muted);">${repo.addedAt}</small>` : ''}
-            </article>
+              <p style="font-size:12.5px; color:var(--text-secondary);">${escapeHtml(repo.whatItDoes)}</p>
+              ${repo.addedAt ? `<small style="color:var(--text-muted);">${escapeHtml(repo.addedAt)}</small>` : ''}
+            </button>
           `
             )
             .join('')}
@@ -397,9 +401,9 @@ export class AtlasApp {
           : hits
               .map(
                 (item) => `
-              <button type="button" class="atlas-search-item" data-hit-id="${item.id}">
-                <strong>${item.name}</strong>
-                <small>${item.domain} · ${item.category}</small>
+              <button type="button" class="atlas-search-item" data-hit-id="${escapeHtml(item.id)}">
+                <strong>${escapeHtml(item.name)}</strong>
+                <small>${escapeHtml(item.domain)} · ${escapeHtml(item.category)}</small>
               </button>
             `
               )
@@ -544,7 +548,7 @@ export class AtlasApp {
       card.addEventListener('click', () => {
         const repo = this.graphEngine.reposById.get(card.dataset.repoId!);
         if (repo) {
-          this.viewMode = '3d';
+          if (this.scene) this.viewMode = '3d';
           this.selectRepository(repo, true);
         }
       });

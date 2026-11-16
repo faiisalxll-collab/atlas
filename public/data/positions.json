@@ -54,6 +54,168 @@
       "x": 28.0,
       "y": 0.5,
       "z": 18.0
+    },
+    "Cloud AI": {
+      "domain": "Infrastructure",
+      "x": -24.49,
+      "y": 22.625,
+      "z": 9.252
+    },
+    "Cloud Infrastructure": {
+      "domain": "Infrastructure",
+      "x": -27.129,
+      "y": 19.75,
+      "z": 25.921
+    },
+    "Data Infrastructure": {
+      "domain": "Infrastructure",
+      "x": -38.911,
+      "y": 16.875,
+      "z": 18.22
+    },
+    "LLM Infrastructure": {
+      "domain": "Infrastructure",
+      "x": -17.264,
+      "y": 14.0,
+      "z": 11.879
+    },
+    "Local AI": {
+      "domain": "Infrastructure",
+      "x": -38.43,
+      "y": 11.125,
+      "z": 19.899
+    },
+    "MCP": {
+      "domain": "Infrastructure",
+      "x": -27.997,
+      "y": 8.25,
+      "z": 25.959
+    },
+    "MCP Infrastructure": {
+      "domain": "Infrastructure",
+      "x": -31.631,
+      "y": 5.375,
+      "z": 22.684
+    },
+    "Search Infrastructure": {
+      "domain": "Infrastructure",
+      "x": -28.0,
+      "y": 2.5,
+      "z": 16.0
+    },
+    "AI Decision Models": {
+      "domain": "Intelligence",
+      "x": 37.959,
+      "y": 17.75,
+      "z": 18.081
+    },
+    "AI Evaluation": {
+      "domain": "Intelligence",
+      "x": 36.547,
+      "y": 12.0,
+      "z": 10.306
+    },
+    "Browser Agents": {
+      "domain": "Intelligence",
+      "x": 28.0,
+      "y": 0.5,
+      "z": 18.0
+    },
+    "AI Hardware": {
+      "domain": "Frontier Research",
+      "x": -18.0,
+      "y": 37.5,
+      "z": -26.0
+    },
+    "Research AI": {
+      "domain": "Frontier Research",
+      "x": -18.0,
+      "y": 14.5,
+      "z": -26.0
+    },
+    "AI Security": {
+      "domain": "Security",
+      "x": 16.0,
+      "y": 39.5,
+      "z": -24.0
+    },
+    "Cybersecurity": {
+      "domain": "Security",
+      "x": 6.194,
+      "y": 28.0,
+      "z": -30.008
+    },
+    "MCP Security": {
+      "domain": "Security",
+      "x": 16.0,
+      "y": 16.5,
+      "z": -24.0
+    },
+    "Audio AI": {
+      "domain": "Perception",
+      "x": 32.0,
+      "y": -2.5,
+      "z": -18.0
+    },
+    "Voice AI": {
+      "domain": "Perception",
+      "x": 32.0,
+      "y": -25.5,
+      "z": -18.0
+    },
+    "Automation": {
+      "domain": "Engineering",
+      "x": 0.0,
+      "y": -16.5,
+      "z": 22.0
+    },
+    "CAD AI": {
+      "domain": "Engineering",
+      "x": -1.51,
+      "y": -21.1,
+      "z": 31.075
+    },
+    "Data & Office AI": {
+      "domain": "Engineering",
+      "x": 9.855,
+      "y": -25.7,
+      "z": 16.538
+    },
+    "Developer Tools": {
+      "domain": "Engineering",
+      "x": 0.292,
+      "y": -30.3,
+      "z": 33.264
+    },
+    "Document AI": {
+      "domain": "Engineering",
+      "x": 2.845,
+      "y": -34.9,
+      "z": 30.749
+    },
+    "Mobile AI": {
+      "domain": "Engineering",
+      "x": 0.0,
+      "y": -39.5,
+      "z": 22.0
+    },
+    "Design AI": {
+      "domain": "Creative Systems",
+      "x": -32.0,
+      "y": -4.5,
+      "z": -16.0
+    },
+    "Image AI": {
+      "domain": "Creative Systems",
+      "x": -24.689,
+      "y": -16.0,
+      "z": -24.877
+    },
+    "Video AI": {
+      "domain": "Creative Systems",
+      "x": -32.0,
+      "y": -27.5,
+      "z": -16.0
     }
   },
   "repositories": {
@@ -152,6 +314,786 @@
       "x": 28.0,
       "y": 8.0,
       "z": 18.0
+    },
+    "copilotkit__openbot": {
+      "category": "AI Agents",
+      "x": 27.271,
+      "y": 17.875,
+      "z": 13.093
+    },
+    "paperclipai__paperclip": {
+      "category": "AI Agents",
+      "x": 28.0,
+      "y": 16.0,
+      "z": 18.0
+    },
+    "nandhakishorm__laya": {
+      "category": "AI Decision Models",
+      "x": 37.959,
+      "y": 25.25,
+      "z": 18.081
+    },
+    "opensearch-project__agent-health": {
+      "category": "AI Evaluation",
+      "x": 36.547,
+      "y": 19.5,
+      "z": 10.306
+    },
+    "ifixai-ai__ifixai": {
+      "category": "AI Evaluation",
+      "x": 29.835,
+      "y": 12.0,
+      "z": 6.96
+    },
+    "tiger-ai-lab__websitebench": {
+      "category": "AI Evaluation",
+      "x": 36.547,
+      "y": 4.5,
+      "z": 10.306
+    },
+    "onehumanbeing__esp32-iphone-agent": {
+      "category": "AI Hardware",
+      "x": -18.0,
+      "y": 45.0,
+      "z": -26.0
+    },
+    "flashcat-jordan__flashduck": {
+      "category": "AI Hardware",
+      "x": -17.544,
+      "y": 37.5,
+      "z": -33.486
+    },
+    "regeneratuslabs__physical-hermes": {
+      "category": "AI Hardware",
+      "x": -18.0,
+      "y": 30.0,
+      "z": -26.0
+    },
+    "dotstell__dotstell": {
+      "category": "AI Memory",
+      "x": 28.0,
+      "y": 8.0,
+      "z": 18.0
+    },
+    "guardana__guardana": {
+      "category": "AI Security",
+      "x": 16.0,
+      "y": 47.0,
+      "z": -24.0
+    },
+    "nvidia__openshell": {
+      "category": "AI Security",
+      "x": 10.243,
+      "y": 42.0,
+      "z": -19.894
+    },
+    "huggingface__safeagents": {
+      "category": "AI Security",
+      "x": 21.496,
+      "y": 37.0,
+      "z": -19.551
+    },
+    "nvidia__skillspector": {
+      "category": "AI Security",
+      "x": 16.0,
+      "y": 32.0,
+      "z": -24.0
+    },
+    "kanaworksai-hue__audio-studio-mcp": {
+      "category": "Audio AI",
+      "x": 32.0,
+      "y": 5.0,
+      "z": -18.0
+    },
+    "0xshug0__audiocpp": {
+      "category": "Audio AI",
+      "x": 39.5,
+      "y": -2.5,
+      "z": -17.939
+    },
+    "leonxlnx__earshot": {
+      "category": "Audio AI",
+      "x": 32.0,
+      "y": -10.0,
+      "z": -18.0
+    },
+    "kkkkhazix__agent-autoloop": {
+      "category": "Automation",
+      "x": 0.0,
+      "y": -9.0,
+      "z": 22.0
+    },
+    "vercel-labs__agent-desktop": {
+      "category": "Automation",
+      "x": 6.489,
+      "y": -12.75,
+      "z": 21.713
+    },
+    "emanuele-em__kanzo": {
+      "category": "Automation",
+      "x": -5.301,
+      "y": -16.5,
+      "z": 27.306
+    },
+    "shawnpana__phone-harness": {
+      "category": "Automation",
+      "x": 4.302,
+      "y": -20.25,
+      "z": 17.133
+    },
+    "microsoft__skill-recorder": {
+      "category": "Automation",
+      "x": 0.0,
+      "y": -24.0,
+      "z": 22.0
+    },
+    "lvcidpsyche__auto-browser": {
+      "category": "Browser Agents",
+      "x": 28.0,
+      "y": 8.0,
+      "z": 18.0
+    },
+    "ctoldigital__axuse": {
+      "category": "Browser Agents",
+      "x": 34.042,
+      "y": 4.25,
+      "z": 15.616
+    },
+    "shijou87__brow": {
+      "category": "Browser Agents",
+      "x": 25.801,
+      "y": 0.5,
+      "z": 10.83
+    },
+    "graph-memory__browser-mcp": {
+      "category": "Browser Agents",
+      "x": 28.958,
+      "y": -3.25,
+      "z": 11.576
+    },
+    "alibaba__qz-browser-agent": {
+      "category": "Browser Agents",
+      "x": 28.0,
+      "y": -7.0,
+      "z": 18.0
+    },
+    "pascalorg__editor": {
+      "category": "CAD AI",
+      "x": -1.51,
+      "y": -13.6,
+      "z": 31.075
+    },
+    "tangency-labs__solidcraft": {
+      "category": "CAD AI",
+      "x": 4.742,
+      "y": -21.1,
+      "z": 26.932
+    },
+    "earthtojake__text-to-cad": {
+      "category": "CAD AI",
+      "x": -1.51,
+      "y": -28.6,
+      "z": 31.075
+    },
+    "skypilot-org__skypilot": {
+      "category": "Cloud AI",
+      "x": -24.49,
+      "y": 30.125,
+      "z": 9.252
+    },
+    "floci-io__floci": {
+      "category": "Cloud Infrastructure",
+      "x": -27.129,
+      "y": 27.25,
+      "z": 25.921
+    },
+    "beenuar__aisoc": {
+      "category": "Cybersecurity",
+      "x": 6.194,
+      "y": 35.5,
+      "z": -30.008
+    },
+    "thomasunise__argus": {
+      "category": "Cybersecurity",
+      "x": 7.786,
+      "y": 33.0,
+      "z": -24.649
+    },
+    "cloudflare__security-audit-skill": {
+      "category": "Cybersecurity",
+      "x": 8.729,
+      "y": 30.5,
+      "z": -36.609
+    },
+    "fazmin__cve-intel": {
+      "category": "Cybersecurity",
+      "x": 7.3,
+      "y": 28.0,
+      "z": -22.59
+    },
+    "hevnsnt__cvengine": {
+      "category": "Cybersecurity",
+      "x": 1.374,
+      "y": 25.5,
+      "z": -24.834
+    },
+    "zfinix__eleven": {
+      "category": "Cybersecurity",
+      "x": 5.657,
+      "y": 23.0,
+      "z": -35.572
+    },
+    "davidmatousek__tachi": {
+      "category": "Cybersecurity",
+      "x": 6.194,
+      "y": 20.5,
+      "z": -30.008
+    },
+    "genspark-ai__genoffice": {
+      "category": "Data & Office AI",
+      "x": 9.855,
+      "y": -18.2,
+      "z": 16.538
+    },
+    "dream-num__univer-workspace": {
+      "category": "Data & Office AI",
+      "x": 9.855,
+      "y": -33.2,
+      "z": 16.538
+    },
+    "datus-ai__datus-agent": {
+      "category": "Data Infrastructure",
+      "x": -38.911,
+      "y": 24.375,
+      "z": 18.22
+    },
+    "nvidia__auto-ontology": {
+      "category": "Data Infrastructure",
+      "x": -38.911,
+      "y": 9.375,
+      "z": 18.22
+    },
+    "patch-gg__anymove": {
+      "category": "Design AI",
+      "x": -32.0,
+      "y": 3.0,
+      "z": -16.0
+    },
+    "el4cteo__blender-skills": {
+      "category": "Design AI",
+      "x": -28.958,
+      "y": -2.0,
+      "z": -22.383
+    },
+    "zseven-w__openpencil": {
+      "category": "Design AI",
+      "x": -25.54,
+      "y": -7.0,
+      "z": -13.125
+    },
+    "heydamir__unslop": {
+      "category": "Design AI",
+      "x": -32.0,
+      "y": -12.0,
+      "z": -16.0
+    },
+    "rudrendupaul__agent-observability": {
+      "category": "Developer Tools",
+      "x": 0.292,
+      "y": -22.8,
+      "z": 33.264
+    },
+    "daveebbelaar__bama": {
+      "category": "Developer Tools",
+      "x": 2.414,
+      "y": -23.8,
+      "z": 36.346
+    },
+    "mksglu__context-mode": {
+      "category": "Developer Tools",
+      "x": -4.729,
+      "y": -24.8,
+      "z": 34.152
+    },
+    "mokevnin__dev-quality-gates": {
+      "category": "Developer Tools",
+      "x": 6.149,
+      "y": -25.8,
+      "z": 31.962
+    },
+    "google__elephant-goldfish-model": {
+      "category": "Developer Tools",
+      "x": -6.341,
+      "y": -26.8,
+      "z": 33.268
+    },
+    "expo__exact": {
+      "category": "Developer Tools",
+      "x": -3.298,
+      "y": -27.8,
+      "z": 39.356
+    },
+    "feder-cr__git-ai": {
+      "category": "Developer Tools",
+      "x": -7.052,
+      "y": -28.8,
+      "z": 33.516
+    },
+    "graphify-labs__graphify": {
+      "category": "Developer Tools",
+      "x": -6.285,
+      "y": -29.8,
+      "z": 29.694
+    },
+    "nestjs__ai": {
+      "category": "Developer Tools",
+      "x": 1.585,
+      "y": -30.8,
+      "z": 40.635
+    },
+    "shanselman__sandbox-mcp": {
+      "category": "Developer Tools",
+      "x": 7.618,
+      "y": -31.8,
+      "z": 33.844
+    },
+    "kitlangton__scrawl": {
+      "category": "Developer Tools",
+      "x": -6.672,
+      "y": -32.8,
+      "z": 34.488
+    },
+    "caru-ini__stack-diagram": {
+      "category": "Developer Tools",
+      "x": -5.788,
+      "y": -33.8,
+      "z": 30.613
+    },
+    "jetbrains__thinkrail": {
+      "category": "Developer Tools",
+      "x": -1.164,
+      "y": -34.8,
+      "z": 39.085
+    },
+    "charonyuu__whatsmyagentdoing": {
+      "category": "Developer Tools",
+      "x": 0.151,
+      "y": -35.8,
+      "z": 38.361
+    },
+    "max-sixty__worktrunk": {
+      "category": "Developer Tools",
+      "x": 2.16,
+      "y": -36.8,
+      "z": 36.506
+    },
+    "ziya-ai__ziya": {
+      "category": "Developer Tools",
+      "x": 0.292,
+      "y": -37.8,
+      "z": 33.264
+    },
+    "datalab-to__indra": {
+      "category": "Document AI",
+      "x": 2.845,
+      "y": -27.4,
+      "z": 30.749
+    },
+    "srivnamrata__multixtract": {
+      "category": "Document AI",
+      "x": 2.845,
+      "y": -42.4,
+      "z": 30.749
+    },
+    "n24q02m__imagine-mcp": {
+      "category": "Image AI",
+      "x": -24.689,
+      "y": -8.5,
+      "z": -24.877
+    },
+    "openmoss__moss-image": {
+      "category": "Image AI",
+      "x": -22.913,
+      "y": -13.5,
+      "z": -18.033
+    },
+    "storytold__photocraft": {
+      "category": "Image AI",
+      "x": -25.915,
+      "y": -18.5,
+      "z": -17.913
+    },
+    "patch-gg__pixelfx": {
+      "category": "Image AI",
+      "x": -24.689,
+      "y": -23.5,
+      "z": -24.877
+    },
+    "bentoml__llm-optimizer": {
+      "category": "LLM Infrastructure",
+      "x": -17.264,
+      "y": 21.5,
+      "z": 11.879
+    },
+    "deepseek-ai__deepinfer": {
+      "category": "LLM Infrastructure",
+      "x": -22.561,
+      "y": 16.5,
+      "z": 7.194
+    },
+    "headroomlabs-ai__headroom": {
+      "category": "LLM Infrastructure",
+      "x": -10.502,
+      "y": 11.5,
+      "z": 13.946
+    },
+    "xl03-bit__sm120-nvfp4-training": {
+      "category": "LLM Infrastructure",
+      "x": -17.264,
+      "y": 6.5,
+      "z": 11.879
+    },
+    "atomicbot-ai__atomic-agent": {
+      "category": "Local AI",
+      "x": -38.43,
+      "y": 18.625,
+      "z": 19.899
+    },
+    "cactus-compute__cactus": {
+      "category": "Local AI",
+      "x": -36.781,
+      "y": 17.261,
+      "z": 15.914
+    },
+    "justvugg__colibri": {
+      "category": "Local AI",
+      "x": -42.929,
+      "y": 15.898,
+      "z": 16.261
+    },
+    "qualcomm__geniex": {
+      "category": "Local AI",
+      "x": -33.75,
+      "y": 14.534,
+      "z": 15.132
+    },
+    "frigadehq__hob": {
+      "category": "Local AI",
+      "x": -40.657,
+      "y": 13.17,
+      "z": 26.762
+    },
+    "ahtx__kindi": {
+      "category": "Local AI",
+      "x": -39.018,
+      "y": 11.807,
+      "z": 27.345
+    },
+    "drawthingsai__local-code-community": {
+      "category": "Local AI",
+      "x": -41.104,
+      "y": 10.443,
+      "z": 12.925
+    },
+    "generated-computers__locals": {
+      "category": "Local AI",
+      "x": -40.958,
+      "y": 9.08,
+      "z": 26.657
+    },
+    "makazhanalpamys__soup": {
+      "category": "Local AI",
+      "x": -31.75,
+      "y": 7.716,
+      "z": 19.899
+    },
+    "niko1221__strata": {
+      "category": "Local AI",
+      "x": -43.466,
+      "y": 6.352,
+      "z": 22.748
+    },
+    "frigadehq__yogurt": {
+      "category": "Local AI",
+      "x": -40.255,
+      "y": 4.989,
+      "z": 23.806
+    },
+    "timoncool__yue2-studio": {
+      "category": "Local AI",
+      "x": -38.43,
+      "y": 3.625,
+      "z": 19.899
+    },
+    "mcpjam__inspector": {
+      "category": "MCP",
+      "x": -27.997,
+      "y": 15.75,
+      "z": 25.959
+    },
+    "dcc-mcp__dcc-mcp-core": {
+      "category": "MCP Infrastructure",
+      "x": -31.631,
+      "y": 12.875,
+      "z": 22.684
+    },
+    "aipotheosis-labs__gate22": {
+      "category": "MCP Infrastructure",
+      "x": -28.634,
+      "y": 9.125,
+      "z": 16.922
+    },
+    "mikkoparkkola__mcp-gateway": {
+      "category": "MCP Infrastructure",
+      "x": -30.456,
+      "y": 5.375,
+      "z": 30.091
+    },
+    "traceloop__opentelemetry-mcp-server": {
+      "category": "MCP Infrastructure",
+      "x": -25.676,
+      "y": 1.625,
+      "z": 20.091
+    },
+    "reason-machines__reason-network": {
+      "category": "MCP Infrastructure",
+      "x": -31.631,
+      "y": -2.125,
+      "z": 22.684
+    },
+    "ressl__mcp-firewall": {
+      "category": "MCP Security",
+      "x": 16.0,
+      "y": 24.0,
+      "z": -24.0
+    },
+    "openziti__mcp-gateway": {
+      "category": "MCP Security",
+      "x": 18.632,
+      "y": 16.5,
+      "z": -16.977
+    },
+    "ht88-exe__steiner": {
+      "category": "MCP Security",
+      "x": 16.0,
+      "y": 9.0,
+      "z": -24.0
+    },
+    "moonoops__droy": {
+      "category": "Mobile AI",
+      "x": 0.0,
+      "y": -32.0,
+      "z": 22.0
+    },
+    "josssphzhou__poki": {
+      "category": "Mobile AI",
+      "x": 0.0,
+      "y": -47.0,
+      "z": 22.0
+    },
+    "chutingyean__agent-cockpit": {
+      "category": "Research AI",
+      "x": -18.0,
+      "y": 22.0,
+      "z": -26.0
+    },
+    "sakanaai__ai-scientist-v3": {
+      "category": "Research AI",
+      "x": -12.065,
+      "y": 19.0,
+      "z": -25.117
+    },
+    "mvanhorn__last30days-skill": {
+      "category": "Research AI",
+      "x": -24.99,
+      "y": 16.0,
+      "z": -28.266
+    },
+    "zhuyansen__new-term-radar": {
+      "category": "Research AI",
+      "x": -18.706,
+      "y": 13.0,
+      "z": -18.686
+    },
+    "ruc-nlpir__searchclaw": {
+      "category": "Research AI",
+      "x": -21.177,
+      "y": 10.0,
+      "z": -20.91
+    },
+    "hybridrobotics__supermimic": {
+      "category": "Research AI",
+      "x": -18.0,
+      "y": 7.0,
+      "z": -26.0
+    },
+    "yjid__kensaku": {
+      "category": "Search Infrastructure",
+      "x": -28.0,
+      "y": 10.0,
+      "z": 16.0
+    },
+    "yolow92__pagesift": {
+      "category": "Search Infrastructure",
+      "x": -21.177,
+      "y": 2.5,
+      "z": 12.886
+    },
+    "xerj-org__xerj": {
+      "category": "Search Infrastructure",
+      "x": -28.0,
+      "y": -5.0,
+      "z": 16.0
+    },
+    "frankshan001__cutvoke": {
+      "category": "Video AI",
+      "x": -32.0,
+      "y": -20.0,
+      "z": -16.0
+    },
+    "swax__dub-anything": {
+      "category": "Video AI",
+      "x": -29.264,
+      "y": -21.875,
+      "z": -20.138
+    },
+    "0xs4n4tg__kinetograph": {
+      "category": "Video AI",
+      "x": -34.647,
+      "y": -23.75,
+      "z": -21.931
+    },
+    "openfilm__openfilm": {
+      "category": "Video AI",
+      "x": -38.887,
+      "y": -25.625,
+      "z": -13.696
+    },
+    "calesthio__openmontage": {
+      "category": "Video AI",
+      "x": -26.514,
+      "y": -27.5,
+      "z": -21.114
+    },
+    "juneyaooo__rea-video": {
+      "category": "Video AI",
+      "x": -32.824,
+      "y": -29.375,
+      "z": -8.785
+    },
+    "voyager-so__vork": {
+      "category": "Video AI",
+      "x": -28.949,
+      "y": -31.25,
+      "z": -10.266
+    },
+    "actionow-ai__vvv": {
+      "category": "Video AI",
+      "x": -36.956,
+      "y": -33.125,
+      "z": -15.784
+    },
+    "weftcut__weftcut": {
+      "category": "Video AI",
+      "x": -32.0,
+      "y": -35.0,
+      "z": -16.0
+    },
+    "mutonby__agentring": {
+      "category": "Voice AI",
+      "x": 32.0,
+      "y": -18.0,
+      "z": -18.0
+    },
+    "bolna-ai__bolna": {
+      "category": "Voice AI",
+      "x": 35.223,
+      "y": -19.0,
+      "z": -19.901
+    },
+    "dograh-hq__dograh": {
+      "category": "Voice AI",
+      "x": 28.272,
+      "y": -20.0,
+      "z": -14.521
+    },
+    "majorminorlabs__hermes-voice": {
+      "category": "Voice AI",
+      "x": 31.632,
+      "y": -21.0,
+      "z": -12.011
+    },
+    "c4rohan__lampline": {
+      "category": "Voice AI",
+      "x": 38.463,
+      "y": -22.0,
+      "z": -16.508
+    },
+    "modelguide__modelguide": {
+      "category": "Voice AI",
+      "x": 30.709,
+      "y": -23.0,
+      "z": -24.952
+    },
+    "nvidia-nemo__labs-voice-agent": {
+      "category": "Voice AI",
+      "x": 29.25,
+      "y": -24.0,
+      "z": -24.814
+    },
+    "katipally__openlive": {
+      "category": "Voice AI",
+      "x": 34.372,
+      "y": -25.0,
+      "z": -10.903
+    },
+    "patterai__patter": {
+      "category": "Voice AI",
+      "x": 25.587,
+      "y": -26.0,
+      "z": -21.857
+    },
+    "pegainfer-project__pega-omni": {
+      "category": "Voice AI",
+      "x": 39.01,
+      "y": -27.0,
+      "z": -20.205
+    },
+    "telecmi__agents": {
+      "category": "Voice AI",
+      "x": 38.599,
+      "y": -28.0,
+      "z": -15.459
+    },
+    "qwenaudio__qwen-audio-agent": {
+      "category": "Voice AI",
+      "x": 28.726,
+      "y": -29.0,
+      "z": -12.231
+    },
+    "timoncool__speech-studio": {
+      "category": "Voice AI",
+      "x": 36.524,
+      "y": -30.0,
+      "z": -14.059
+    },
+    "ten-framework__ten-framework": {
+      "category": "Voice AI",
+      "x": 36.604,
+      "y": -31.0,
+      "z": -20.192
+    },
+    "ananas2916__tsukumo": {
+      "category": "Voice AI",
+      "x": 35.74,
+      "y": -32.0,
+      "z": -18.126
+    },
+    "fluxions-ai__vui": {
+      "category": "Voice AI",
+      "x": 32.0,
+      "y": -33.0,
+      "z": -18.0
     }
   }
 }

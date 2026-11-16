@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
+// @vitest-environment jsdom
 import { resolve } from 'node:path';
 import { validateRepository, validateSafeUrl, sanitizeString } from '../src/data/loader';
 import { GraphEngine } from '../src/graph/GraphEngine';
@@ -8,7 +9,7 @@ import { parseHashState, buildShareableUrl } from '../src/features/DeepLinks';
 import type { UniverseDataset } from '../src/data/types';
 
 function loadDiskDataset(): UniverseDataset {
-  const root = resolve(__dirname, '../public/data');
+  const root = resolve(process.cwd(), 'public/data');
   const repositories = JSON.parse(readFileSync(resolve(root, 'repositories.json'), 'utf-8'));
   const relationships = JSON.parse(readFileSync(resolve(root, 'relationships.json'), 'utf-8'));
   const trails = JSON.parse(readFileSync(resolve(root, 'trails.json'), 'utf-8'));

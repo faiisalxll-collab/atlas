@@ -84,13 +84,12 @@ def normalize_github_url(raw_url: str) -> Optional[str]:
     if url.endswith(".git"):
         url = url[:-4]
     parsed = urlparse(url)
-    if parsed.scheme not in ("http", "https") or not parsed.netloc:
+    if parsed.scheme not in ("https", "http") or parsed.netloc.lower() != "github.com":
         return None
-    if "github.com" in parsed.netloc.lower():
-        parts = [p for p in parsed.path.split("/") if p]
-        if len(parts) >= 2:
-            return f"https://github.com/{parts[0]}/{parts[1]}"
-    return url
+    if not re.fullmatch(r"/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", parsed.path):
+        return None
+    return f"https://github.com{parsed.path}"
+
 
 
 def extract_github_url(cell_data: Dict[str, Any]) -> Optional[str]:
@@ -215,14 +214,35 @@ def generate_static_og_pages(repositories: List[Dict[str, Any]], base_url: str) 
 
 
 def fetch_from_google_sheets(sheet_id: str) -> List[Dict[str, Any]]:
-    from google.oauth2 import service_account
-    from googleapiclient.discovery import build
-
     creds_json = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON")
     if not creds_json:
-        raise RuntimeError(
-            "GOOGLE_SERVICE_ACCOUNT_JSON is not set. Configure a read-only Service Account JSON in GitHub Secrets."
-        )
+        from io import BytesIO
+        from urllib.request import urlopen
+        from openpyxl import load_workbook
+
+        with urlopen(f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=xlsx", timeout=60) as response:
+            workbook = load_workbook(BytesIO(response.read()), data_only=False)
+        try:
+            rows = []
+            for row in workbook[SHEET_NAME].iter_rows(max_col=9):
+                cells = []
+                for cell in row:
+                    value = cell.value
+                    if isinstance(value, datetime):
+                        value = value.date().isoformat()
+                    entry = {"formattedValue": str(value) if value is not None else ""}
+                    if cell.hyperlink:
+                        entry["hyperlink"] = cell.hyperlink.target
+                    if cell.data_type == "f":
+                        entry["userEnteredValue"] = {"formulaValue": value}
+                    cells.append(entry)
+                rows.append({"values": cells})
+            return parse_rows(rows)
+        finally:
+            workbook.close()
+
+    from google.oauth2 import service_account
+    from googleapiclient.discovery import build
 
     creds_info = json.loads(creds_json)
     creds = service_account.Credentials.from_service_account_info(
@@ -233,7 +253,7 @@ def fetch_from_google_sheets(sheet_id: str) -> List[Dict[str, Any]]:
         service.spreadsheets()
         .get(
             spreadsheetId=sheet_id,
-            ranges=[f"{SHEET_NAME}!A1:I2000"],
+            ranges=[f"{SHEET_NAME}!A:I"],
             includeGridData=True,
         )
         .execute()
@@ -244,6 +264,17 @@ def fetch_from_google_sheets(sheet_id: str) -> List[Dict[str, Any]]:
         raise RuntimeError("No sheets returned from Google Sheets API.")
 
     row_data = sheets[0].get("data", [{}])[0].get("rowData", [])
+    return parse_rows(row_data)
+
+
+def parse_rows(row_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    headers = [c.get("formattedValue") for c in row_data[0]["values"]] if row_data else []
+    if headers != ["التصنيف", "المستودع", "وش يسوي؟", "وش يفيدك؟", "ليش مميز؟", "مثال استخدام", "لمن يفيد؟", "🔗 فتح المستودع", "تاريخ الإضافة"]:
+        raise ValueError("Unexpected sheet headers")
+    old_path = DATA_DIR / "repositories.json"
+    old = json.loads(old_path.read_text()) if old_path.exists() else []
+    known_urls = {r["githubUrl"].lower(): r["id"] for r in old if r.get("githubUrl")}
+    legacy = {r["name"].casefold(): r["id"] for r in old if not r.get("githubUrl")}
     repositories: List[Dict[str, Any]] = []
     seen_ids = set()
 
@@ -266,7 +297,7 @@ def fetch_from_google_sheets(sheet_id: str) -> List[Dict[str, Any]]:
         raw_date = cell_str(8)
         added_at = raw_date if re.match(r"^\d{4}-\d{2}-\d{2}$", raw_date) else None
 
-        repo_id = make_stable_id(name, github_url)
+        repo_id = known_urls.get((github_url or "").lower()) or legacy.get(name.casefold()) or make_stable_id(name, github_url)
         if repo_id in seen_ids:
             continue
         seen_ids.add(repo_id)

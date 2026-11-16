@@ -17,7 +17,8 @@ export function validateSafeUrl(raw: unknown): string | null {
   if (typeof raw !== 'string' || !raw.trim()) return null;
   try {
     const parsed = new URL(raw.trim());
-    if (parsed.protocol === 'https:' || parsed.protocol === 'http:') {
+    if (['https:', 'http:'].includes(parsed.protocol) && parsed.hostname === 'github.com' &&
+        !parsed.username && !parsed.password && !parsed.port && /^\/[\w.-]+\/[\w.-]+\/?$/.test(parsed.pathname)) {
       return parsed.toString();
     }
     return null;

@@ -59,7 +59,6 @@ export class UniverseScene {
   private highlightedRepoIds = new Set<string>();
   private activeTrailRepoIds: string[] = [];
   private showAllConnections = false;
-  private lang: Lang = 'ar';
 
   // Camera smooth interpolation
   private camGoalPos: THREE.Vector3 | null = null;
@@ -98,18 +97,6 @@ export class UniverseScene {
     this.startLoop();
   }
 
-  public static isWebGLAvailable(): boolean {
-    try {
-      const testCanvas = document.createElement('canvas');
-      return !!(
-        window.WebGLRenderingContext &&
-        (testCanvas.getContext('webgl') || testCanvas.getContext('experimental-webgl'))
-      );
-    } catch {
-      return false;
-    }
-  }
-
   private initThree(): void {
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
@@ -129,7 +116,7 @@ export class UniverseScene {
       0.1,
       600
     );
-    this.camera.position.set(0, 26, 98);
+    this.camera.position.set(0, 26, this.overviewDistance());
 
     this.controls = new OrbitControls(this.camera, this.canvas);
     this.controls.enableDamping = true;
@@ -288,6 +275,12 @@ export class UniverseScene {
     if (this.starInstancedMesh.instanceColor) {
       this.starInstancedMesh.instanceColor.needsUpdate = true;
     }
+    // Bound all interpolated centers for both culling and ray picking.
+    const bounds = new THREE.Box3();
+    for (const node of this.graphEngine.nodes.values()) {
+      for (const p of [node.anchorPos, node.targetPos]) bounds.expandByPoint(new THREE.Vector3(p.x, p.y, p.z));
+    }
+    this.starInstancedMesh.boundingSphere = bounds.expandByScalar(3).getBoundingSphere(new THREE.Sphere());
     this.scene.add(this.starInstancedMesh);
 
     // 4. Hierarchy Lines Buffer
@@ -360,7 +353,6 @@ export class UniverseScene {
   }
 
   public setLanguage(lang: Lang): void {
-    this.lang = lang;
     for (const [id, el] of this.labelElements.entries()) {
       const node = this.graphEngine.nodes.get(id);
       if (!node) continue;
@@ -458,8 +450,12 @@ export class UniverseScene {
     }
   }
 
+  private overviewDistance(): number {
+    return Math.min(200, 98 / Math.min(1, this.camera.aspect));
+  }
+
   public resetCamera(): void {
-    this.flyToPosition({ x: 0, y: 0, z: 0 }, 98);
+    this.flyToPosition({ x: 0, y: 0, z: 0 }, this.overviewDistance());
   }
 
   public zoomStep(deltaFactor: number): void {
@@ -625,7 +621,7 @@ export class UniverseScene {
       this.updateCameraFlight(dt);
       this.controls.update();
       this.updateNodeAnimations(dt);
-      this.updateLinesAndPulses(elapsed);
+      this.updateLinesAndPulses(this.prefersReducedMotion ? 0 : elapsed);
       this.updateProjectedLabels();
       this.updateSemanticZoomTier();
 
@@ -662,7 +658,7 @@ export class UniverseScene {
         const mesh = this.domainMeshes.get(id);
         if (mesh) {
           mesh.position.copy(st.currentPos);
-          mesh.rotation.y += dt * 0.22;
+          if (!this.prefersReducedMotion) mesh.rotation.y += dt * 0.22;
         }
       } else if (st.node.tier === 'category') {
         const mesh = this.categoryMeshes.get(id);
@@ -670,7 +666,7 @@ export class UniverseScene {
           mesh.position.copy(st.currentPos);
           mesh.scale.setScalar(Math.max(st.currentScale, 0.001));
           mesh.visible = st.currentScale > 0.02;
-          mesh.rotation.y -= dt * 0.35;
+          if (!this.prefersReducedMotion) mesh.rotation.y -= dt * 0.35;
         }
       }
     }
