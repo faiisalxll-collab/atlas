@@ -43,7 +43,7 @@ export class AtlasApp {
 
     this.initSceneOrFallback();
     this.renderHud();
-    this.applyInitialDeepLink();
+    if (location.hash) this.restoreRoute();
     this.bindGlobalShortcuts();
   }
 
@@ -76,7 +76,17 @@ export class AtlasApp {
     this.viewMode = 'list';
   }
 
-  private applyInitialDeepLink(): void {
+  private restoreRoute(): void {
+    this.activeTrail = null;
+    this.activeCategory = null;
+    this.activeDomain = null;
+    this.selectedRepo = null;
+    this.trailStepIndex = 0;
+    this.showConnections = false;
+    this.recentFilterDays = null;
+    this.scene?.setActiveTrail([]);
+    this.scene?.setShowAllConnections(false);
+    this.scene?.collapseAll();
     const state = parseHashState();
     if (state.repoId && this.graphEngine.reposById.has(state.repoId)) {
       const repo = this.graphEngine.reposById.get(state.repoId)!;
@@ -84,13 +94,17 @@ export class AtlasApp {
     } else if (state.trailId) {
       const trail = this.dataset.trails.find((t) => t.id === state.trailId);
       if (trail) this.activateTrail(trail, false);
-    } else if (state.category) {
+      else this.renderHud();
+    } else if (state.category && this.graphEngine.nodes.has(`cat:${state.category}`)) {
+      this.activeDomain = this.graphEngine.nodes.get(`cat:${state.category}`)?.domain ?? null;
       this.activeCategory = state.category;
       this.scene?.expandCategory(state.category, true);
       this.renderHud();
-    } else if (state.domainId) {
+    } else if (state.domainId && this.graphEngine.nodes.has(`dom:${state.domainId}`)) {
       this.activeDomain = state.domainId as MacroDomainId;
       this.scene?.expandDomain(this.activeDomain, true);
+      this.renderHud();
+    } else {
       this.renderHud();
     }
   }
@@ -102,6 +116,12 @@ export class AtlasApp {
         const input = document.getElementById('atlas-search-input') as HTMLInputElement | null;
         input?.focus();
       } else if (e.key === 'Escape') {
+        const dropdown = document.getElementById('atlas-search-dropdown');
+        if (dropdown && !dropdown.hidden) {
+          dropdown.hidden = true;
+          document.getElementById('atlas-search-input')?.focus();
+          return;
+        }
         if (!this.hudVisible) {
           this.hudVisible = true;
           this.renderHud();
@@ -114,7 +134,7 @@ export class AtlasApp {
     });
 
     window.addEventListener('popstate', () => {
-      this.applyInitialDeepLink();
+      this.restoreRoute();
     });
   }
 
@@ -146,12 +166,17 @@ export class AtlasApp {
       updateHashState({ repoId: repo.id });
     }
     this.renderHud();
+    document.getElementById('btn-close-inspector')?.focus({ preventScroll: true });
   }
 
   public clearSelection(): void {
+    const id = this.selectedRepo?.id;
     this.selectedRepo = null;
-    updateHashState({});
+    updateHashState(this.activeCategory ? { category: this.activeCategory } : {});
     this.renderHud();
+    const trigger = id && document.querySelector<HTMLElement>(this.viewMode === 'list'
+      ? `[data-repo-id="${CSS.escape(id)}"]` : `[data-node-id="repo:${CSS.escape(id)}"]`);
+    (trigger || document.getElementById('atlas-search-input'))?.focus({ preventScroll: true });
   }
 
   public activateTrail(trail: DiscoveryTrail | null, pushHistory = true): void {
@@ -449,9 +474,17 @@ export class AtlasApp {
     });
 
     document.getElementById('btn-toggle-lang')?.addEventListener('click', () => {
+      const query = searchInput?.value ?? '';
+      const wasOpen = dropdown && !dropdown.hidden;
       this.lang = this.lang === 'ar' ? 'en' : 'ar';
       this.scene?.setLanguage(this.lang);
       this.renderHud();
+      const input = document.querySelector<HTMLInputElement>('#atlas-search-input');
+      if (input && query) {
+        input.value = query;
+        if (wasOpen) input.dispatchEvent(new Event('input'));
+      }
+      document.getElementById('btn-toggle-lang')?.focus({preventScroll: true});
     });
 
     document.getElementById('btn-view-3d')?.addEventListener('click', () => {
@@ -535,15 +568,28 @@ export class AtlasApp {
     document.getElementById('btn-copy-link')?.addEventListener('click', async () => {
       if (!this.selectedRepo) return;
       const url = buildShareableUrl({ repoId: this.selectedRepo.id });
-      await navigator.clipboard?.writeText(url);
       const btn = document.getElementById('btn-copy-link');
-      if (btn) btn.textContent = this.lang === 'ar' ? '✓ تم النسخ' : '✓ Copied';
+      if (!btn) return;
+      try {
+        await navigator.clipboard.writeText(url);
+        btn.textContent = this.lang === 'ar' ? '✓ تم النسخ' : '✓ Copied';
+      } catch {
+        if (!btn.isConnected) return;
+        const input = document.createElement('input');
+        input.readOnly = true;
+        input.value = url;
+        input.setAttribute('aria-label', this.lang === 'ar' ? 'انسخ الرابط يدويًا' : 'Copy the link manually');
+        btn.replaceWith(input);
+        input.focus();
+        input.select();
+      }
     });
 
     document.getElementById('btn-back-cat')?.addEventListener('click', () => {
       if (this.selectedRepo) {
         const cat = this.selectedRepo.category;
         this.selectedRepo = null;
+        updateHashState({ category: cat });
         this.scene?.expandCategory(cat, true);
         this.renderHud();
       }

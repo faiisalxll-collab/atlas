@@ -5,6 +5,7 @@ import { readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 
 const root = resolve('dist');
+const [sample] = JSON.parse(await readFile(resolve(root, 'data/repositories.json'), 'utf8'));
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json' };
 const server = createServer(async (request, response) => {
   const url = new URL(request.url, 'http://localhost');
@@ -98,11 +99,27 @@ try {
         }
         await page.locator('.atlas-inspector h2').waitFor();
         await page.locator('#btn-close-inspector').tap();
+        const search = page.locator('#atlas-search-input');
+        await search.fill(sample.name);
         await page.locator('#btn-toggle-lang').tap();
         assert.equal(await page.locator('html').getAttribute('lang'), 'en');
-        await page.locator('#atlas-search-input').fill('Agentgateway');
-        await page.locator('[data-hit-id]').first().tap();
-        assert.match(await page.locator('.atlas-inspector h2').innerText(), /agentgateway/i);
+        assert.equal(await search.inputValue(), sample.name);
+        await search.press('Escape');
+        assert.ok(await page.locator('#atlas-search-dropdown').isHidden());
+        await search.fill('');
+        await search.fill(sample.name);
+        const result = page.locator('[data-hit-id]').first();
+        const name = await result.locator('strong').innerText();
+        await result.tap();
+        assert.equal(await page.locator('.atlas-inspector h2').innerText(), name);
+        assert.equal(await page.evaluate(() => document.activeElement.id), 'btn-close-inspector');
+        await page.goBack();
+        await page.locator('.atlas-inspector').waitFor({state:'detached'});
+        await page.goForward();
+        assert.equal(await page.locator('.atlas-inspector h2').innerText(), name);
+        await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', {value: undefined, configurable:true}));
+        await page.locator('#btn-copy-link').tap();
+        assert.equal(await page.getByLabel('Copy the link manually').inputValue(), page.url());
         assert.deepEqual(errors, []);
         console.log(engine.name(), forceList ? 'accessible directory' : '3D star selection', 'passed');
         await page.close();

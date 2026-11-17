@@ -30,6 +30,8 @@ export class UniverseScene {
   private controls!: OrbitControls;
 
   // Instanced meshes for high scalability (1000+ stars in single draw call)
+  private nearStars = new THREE.IcosahedronGeometry(0.52, 1);
+  private distantStars = new THREE.IcosahedronGeometry(0.52, 0);
   private starInstancedMesh!: THREE.InstancedMesh;
   private domainMeshes = new Map<string, THREE.Mesh>();
   private categoryMeshes = new Map<string, THREE.Mesh>();
@@ -277,10 +279,9 @@ export class UniverseScene {
     }
 
     // 3. InstancedMesh for Repository Stars (Single Draw Call)
-    const starGeo = new THREE.IcosahedronGeometry(0.52, 1);
     const starMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
     this.starInstancedMesh = new THREE.InstancedMesh(
-      starGeo,
+      this.nearStars,
       starMat,
       Math.max(this.repoIdOrder.length, 1)
     );
@@ -785,6 +786,8 @@ export class UniverseScene {
       needsColorUpdate = true;
     });
 
+    this.starInstancedMesh.geometry = count > 250 && this.camera.position.distanceTo(this.controls.target) > 68
+      ? this.distantStars : this.nearStars;
     this.starInstancedMesh.count = count;
     if (needsMatrixUpdate) this.starInstancedMesh.instanceMatrix.needsUpdate = true;
     if (needsColorUpdate && this.starInstancedMesh.instanceColor) {
@@ -986,6 +989,8 @@ export class UniverseScene {
       }
     });
     this.starInstancedMesh.dispose();
+    geometries.add(this.nearStars);
+    geometries.add(this.distantStars);
     geometries.forEach(geometry => geometry.dispose());
     materials.forEach(material => material.dispose());
     this.renderer.dispose();

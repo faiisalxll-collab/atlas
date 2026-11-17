@@ -54,13 +54,24 @@ export function validateRepository(raw: unknown): RepositoryRecord | null {
   };
 }
 
+async function optionalRecords<T>(url: string): Promise<T[]> {
+  try {
+    const response = await fetch(url, { signal: AbortSignal.timeout(5000) });
+    if (!response.ok) return [];
+    const data: unknown = await response.json();
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
+}
+
 export async function loadUniverseDataset(basePath = import.meta.env.BASE_URL): Promise<UniverseDataset> {
   const prefix = basePath.endsWith('/') ? basePath : `${basePath}/`;
 
-  const [reposRes, relsRes, trailsRes, posRes, metaRes] = await Promise.all([
+  const [reposRes, rawRels, rawTrails, posRes, metaRes] = await Promise.all([
     fetch(`${prefix}data/repositories.json`),
-    fetch(`${prefix}data/relationships.json`),
-    fetch(`${prefix}data/trails.json`),
+    optionalRecords<RelationshipRecord>(`${prefix}data/relationships.json`),
+    optionalRecords<DiscoveryTrail>(`${prefix}data/trails.json`),
     fetch(`${prefix}data/positions.json`),
     fetch(`${prefix}data/metadata.json`),
   ]);
@@ -71,8 +82,6 @@ export async function loadUniverseDataset(basePath = import.meta.env.BASE_URL): 
   }
 
   const rawRepos = (await reposRes.json()) as unknown[];
-  const rawRels = relsRes.ok ? ((await relsRes.json()) as RelationshipRecord[]) : [];
-  const rawTrails = trailsRes.ok ? ((await trailsRes.json()) as DiscoveryTrail[]) : [];
   const positions = (await posRes.json()) as PositionsManifest;
   const metadata = (await metaRes.json()) as UniverseMetadata;
 

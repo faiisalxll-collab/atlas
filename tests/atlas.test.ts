@@ -1,8 +1,8 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 // @vitest-environment jsdom
 import { resolve } from 'node:path';
-import { validateRepository, validateSafeUrl, sanitizeString } from '../src/data/loader';
+import { loadUniverseDataset, validateRepository, validateSafeUrl, sanitizeString } from '../src/data/loader';
 import { GraphEngine } from '../src/graph/GraphEngine';
 import { SearchEngine } from '../src/features/SearchEngine';
 import { parseHashState, buildShareableUrl } from '../src/features/DeepLinks';
@@ -59,14 +59,10 @@ describe('ATLAS 3D Spatial Graph & Bilingual Search', () => {
   });
 
   it('supports Arabic and English fuzzy search across repository descriptions', () => {
-    const dataset = loadDiskDataset();
-    const search = new SearchEngine(dataset.repositories);
-
-    const arHits = search.search('ذاكرة طويلة المدى');
-    expect(arHits.some((r) => r.name === 'Hindsight')).toBe(true);
-
-    const enHits = search.search('Firecracker');
-    expect(enHits.some((r) => r.name === 'SPACE')).toBe(true);
+    const repo = { ...loadDiskDataset().repositories[0], whatItDoes: 'ذاكرة طويلة المدى', name: 'TestEngine' };
+    const search = new SearchEngine([repo]);
+    expect(search.search('ذاكرة طويلة المدى')[0]?.id).toBe(repo.id);
+    expect(search.search('TestEngine')[0]?.id).toBe(repo.id);
   });
 
   it('parses and serializes deep-link hash routes accurately', () => {
@@ -76,4 +72,24 @@ describe('ATLAS 3D Spatial Graph & Bilingual Search', () => {
     const url = buildShareableUrl({ trailId: 'trail-isolated-infra' });
     expect(url).toContain('#trail=trail-isolated-infra');
   });
+});
+
+it.each(['network', 'invalid JSON', '404'])('loads repositories when optional data fails: %s', async failure => {
+  const dataset = loadDiskDataset();
+  vi.stubGlobal('fetch', async (url: string) => {
+    const key = url.split('/').pop()!.replace('.json', '') as keyof UniverseDataset;
+    if (key === 'relationships' || key === 'trails') {
+      if (failure === 'network') throw new TypeError('Network error');
+      return new Response('invalid', {status: failure === '404' ? 404 : 200});
+    }
+    return new Response(JSON.stringify(dataset[key]));
+  });
+  try {
+    const result = await loadUniverseDataset('/atlas/');
+    expect(result.repositories).toHaveLength(dataset.repositories.length);
+    expect(result.relationships).toEqual([]);
+    expect(result.trails).toEqual([]);
+  } finally {
+    vi.unstubAllGlobals();
+  }
 });
