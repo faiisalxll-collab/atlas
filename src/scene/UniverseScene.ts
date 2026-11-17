@@ -68,6 +68,10 @@ export class UniverseScene {
   // Raycasting & pointer tracking
   private raycaster = new THREE.Raycaster();
   private pointer = new THREE.Vector2();
+  private viewportWidth = 0;
+  private viewportHeight = 0;
+  private resizeObserver = new ResizeObserver(() => this.onResize());
+  private tapPointer: number | null = null;
   private pointerDownPos = { x: 0, y: 0 };
   private rafId: number | null = null;
   private clock = new THREE.Clock();
@@ -103,19 +107,18 @@ export class UniverseScene {
       antialias: true,
       powerPreference: 'high-performance',
     });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setClearColor(0x050608, 1);
 
     this.scene = new THREE.Scene();
-    this.scene.fog = new THREE.FogExp2(0x050608, 0.0042);
+    this.scene.fog = new THREE.FogExp2(0x050608, 0.0028);
 
     this.camera = new THREE.PerspectiveCamera(
       48,
-      window.innerWidth / window.innerHeight,
+      1,
       0.1,
       600
     );
+    this.onResize();
     this.camera.position.set(0, 26, this.overviewDistance());
 
     this.controls = new OrbitControls(this.camera, this.canvas);
@@ -164,10 +167,10 @@ export class UniverseScene {
     // 1. ATLAS Core Geometry
     this.coreGroup = new THREE.Group();
     const coreSphere = new THREE.Mesh(
-      new THREE.SphereGeometry(1.15, 24, 24),
+      new THREE.SphereGeometry(1.55, 24, 24),
       new THREE.MeshBasicMaterial({ color: 0xf6f5f1 })
     );
-    const ringGeo = new THREE.RingGeometry(2.1, 2.22, 64);
+    const ringGeo = new THREE.RingGeometry(2.45, 2.65, 64);
     const ringMat = new THREE.MeshBasicMaterial({
       color: 0xc6b79b,
       side: THREE.DoubleSide,
@@ -248,12 +251,11 @@ export class UniverseScene {
           goalScale: 0.001,
           visible: false,
         });
-        this.createLabelElement(node);
       }
     }
 
     // 3. InstancedMesh for Repository Stars (Single Draw Call)
-    const starGeo = new THREE.SphereGeometry(0.42, 14, 14);
+    const starGeo = new THREE.IcosahedronGeometry(0.52, 1);
     const starMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
     this.starInstancedMesh = new THREE.InstancedMesh(
       starGeo,
@@ -262,19 +264,7 @@ export class UniverseScene {
     );
     this.starInstancedMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
 
-    this.repoIdOrder.forEach((nodeId, idx) => {
-      const state = this.nodeStates.get(nodeId)!;
-      this.instanceIdToRepoNode.set(idx, state.node);
-      this.dummy.position.copy(state.currentPos);
-      this.dummy.scale.setScalar(0.001);
-      this.dummy.updateMatrix();
-      this.starInstancedMesh.setMatrixAt(idx, this.dummy.matrix);
-      this.tempColor.setHex(0xf6f5f1);
-      this.starInstancedMesh.setColorAt(idx, this.tempColor);
-    });
-    if (this.starInstancedMesh.instanceColor) {
-      this.starInstancedMesh.instanceColor.needsUpdate = true;
-    }
+    this.starInstancedMesh.count = 0;
     // Bound all interpolated centers for both culling and ray picking.
     const bounds = new THREE.Box3();
     for (const node of this.graphEngine.nodes.values()) {
@@ -295,7 +285,7 @@ export class UniverseScene {
       new THREE.LineBasicMaterial({
         color: 0xf6f5f1,
         transparent: true,
-        opacity: 0.14,
+        opacity: 0.24,
         depthWrite: false,
       })
     );
@@ -508,6 +498,7 @@ export class UniverseScene {
         state.visible = isOpen;
         if (isOpen) {
           state.goalPos.set(node.targetPos.x, node.targetPos.y, node.targetPos.z);
+          if (!this.labelElements.has(id)) this.createLabelElement(node);
           const isSelected = this.selectedNodeId === id;
           const isHighlighted =
             this.highlightedRepoIds.size > 0 && node.repo && this.highlightedRepoIds.has(node.repo.id);
@@ -558,22 +549,34 @@ export class UniverseScene {
   }
 
   private bindEvents(): void {
+    this.resizeObserver.observe(this.canvas);
+    window.visualViewport?.addEventListener('resize', this.onResize);
     window.addEventListener('resize', this.onResize);
     this.canvas.addEventListener('pointerdown', this.onPointerDown);
     this.canvas.addEventListener('pointerup', this.onPointerUp);
   }
 
   private onResize = (): void => {
-    this.camera.aspect = window.innerWidth / window.innerHeight;
+    const width = this.canvas.clientWidth;
+    const height = this.canvas.clientHeight;
+    if (!width || !height) return;
+    const ratio = Math.min(devicePixelRatio || 1, 2, Math.sqrt(2_000_000 / (width * height)), 4096 / Math.max(width, height));
+    if (width === this.viewportWidth && height === this.viewportHeight && ratio === this.renderer.getPixelRatio()) return;
+    this.viewportWidth = width;
+    this.viewportHeight = height;
+    this.renderer.setDrawingBufferSize(width, height, ratio);
+    this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
   };
 
   private onPointerDown = (e: PointerEvent): void => {
+    this.tapPointer = e.isPrimary ? e.pointerId : null;
     this.pointerDownPos = { x: e.clientX, y: e.clientY };
   };
 
   private onPointerUp = (e: PointerEvent): void => {
+    if (this.tapPointer !== e.pointerId) return;
+    this.tapPointer = null;
     const moveDist = Math.hypot(e.clientX - this.pointerDownPos.x, e.clientY - this.pointerDownPos.y);
     if (moveDist > 6) return; // Ignore drag orbit gestures
 
@@ -674,8 +677,12 @@ export class UniverseScene {
     let needsColorUpdate = false;
     const hasFilter = this.highlightedRepoIds.size > 0;
 
-    this.repoIdOrder.forEach((nodeId, idx) => {
+    let count = 0;
+    this.repoIdOrder.forEach((nodeId) => {
       const st = this.nodeStates.get(nodeId)!;
+      if (!st.visible && st.currentScale < 0.02) return;
+      const idx = count++;
+      this.instanceIdToRepoNode.set(idx, st.node);
       this.dummy.position.copy(st.currentPos);
       this.dummy.scale.setScalar(Math.max(st.currentScale, 0.001));
       this.dummy.updateMatrix();
@@ -697,6 +704,7 @@ export class UniverseScene {
       needsColorUpdate = true;
     });
 
+    this.starInstancedMesh.count = count;
     if (needsMatrixUpdate) this.starInstancedMesh.instanceMatrix.needsUpdate = true;
     if (needsColorUpdate && this.starInstancedMesh.instanceColor) {
       this.starInstancedMesh.instanceColor.needsUpdate = true;
@@ -786,8 +794,8 @@ export class UniverseScene {
   }
 
   private updateProjectedLabels(): void {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const width = this.viewportWidth;
+    const height = this.viewportHeight;
     const camDist = this.camera.position.distanceTo(this.controls.target);
 
     const topbar = document.querySelector('.atlas-topbar')?.getBoundingClientRect();
@@ -825,7 +833,7 @@ export class UniverseScene {
 
       this.projVec.copy(st.currentPos).project(this.camera);
       // Behind camera check
-      if (this.projVec.z > 1) {
+      if (Math.abs(this.projVec.z) > 1) {
         el.style.display = 'none';
         continue;
       }
@@ -891,6 +899,8 @@ export class UniverseScene {
 
   public dispose(): void {
     if (this.rafId !== null) cancelAnimationFrame(this.rafId);
+    this.resizeObserver.disconnect();
+    window.visualViewport?.removeEventListener('resize', this.onResize);
     window.removeEventListener('resize', this.onResize);
     this.canvas.removeEventListener('pointerdown', this.onPointerDown);
     this.canvas.removeEventListener('pointerup', this.onPointerUp);

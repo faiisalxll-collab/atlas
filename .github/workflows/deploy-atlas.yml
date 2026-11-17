@@ -32,6 +32,14 @@ jobs:
       - name: Typecheck and build
         run: npm run build
       - run: npx playwright install --with-deps chromium webkit
+      - name: Capture published baseline
+        run: node scripts/viewport-audit.mjs before
+        continue-on-error: true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlas-before
+          path: audit/before
       - run: node scripts/browser-test.mjs
       - uses: actions/upload-artifact@v4
         with:
@@ -79,3 +87,21 @@ jobs:
             sleep 10
           done
           exit 1
+
+  verify-live:
+    needs: deploy
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/viewport-audit.mjs after
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlas-after
+          path: audit/after
