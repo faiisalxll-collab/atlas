@@ -179,6 +179,7 @@ export class AtlasApp {
   }
 
   private renderHud(): void {
+    this.scene?.setActive(this.viewMode === '3d');
     const isAr = this.lang === 'ar';
     document.documentElement.lang = isAr ? 'ar' : 'en';
     document.documentElement.dir = isAr ? 'rtl' : 'ltr';
@@ -268,7 +269,7 @@ export class AtlasApp {
       ${this.renderInspectorHtml(isAr)}
       ${this.viewMode === 'list' ? this.renderListViewHtml(isAr) : ''}
 
-      <div class="atlas-controls-dock" role="toolbar" aria-label="Universe Controls">
+      ${this.viewMode === '3d' ? `<div class="atlas-controls-dock" role="toolbar" aria-label="Universe Controls">
         <button type="button" class="atlas-btn" id="ctrl-zoom-in" title="Zoom In">+</button>
         <button type="button" class="atlas-btn" id="ctrl-zoom-out" title="Zoom Out">−</button>
         <button type="button" class="atlas-btn" id="ctrl-reset">${isAr ? 'إعادة الضبط' : 'Reset'}</button>
@@ -280,7 +281,7 @@ export class AtlasApp {
         <button type="button" class="atlas-btn" id="ctrl-toggle-hud" ${this.scene ? '' : 'disabled'}>
           ${isAr ? '⛶ توسيع الشاشة' : '⛶ Expand view'}
         </button>
-      </div>
+      </div>` : ''}
     `;
 
     this.attachHudListeners();

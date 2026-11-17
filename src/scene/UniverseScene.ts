@@ -73,6 +73,7 @@ export class UniverseScene {
   private resizeObserver = new ResizeObserver(() => this.onResize());
   private tapPointer: number | null = null;
   private pointerDownPos = { x: 0, y: 0 };
+  private active = true;
   private rafId: number | null = null;
   private clock = new THREE.Clock();
   private lastZoomTier: 'universe' | 'domain' | 'constellation' | 'repository' = 'universe';
@@ -289,6 +290,7 @@ export class UniverseScene {
         depthWrite: false,
       })
     );
+    this.hierarchyLines.frustumCulled = false;
     this.scene.add(this.hierarchyLines);
 
     // 5. Cross-Repository Relationship Lines Buffer
@@ -307,6 +309,7 @@ export class UniverseScene {
         depthWrite: false,
       })
     );
+    this.relationshipLines.frustumCulled = false;
     this.scene.add(this.relationshipLines);
 
     // 6. Synaptic Pulse Particles for Discovery Trails & Active Links
@@ -325,12 +328,14 @@ export class UniverseScene {
         depthWrite: false,
       })
     );
+    this.pulsePoints.frustumCulled = false;
     this.scene.add(this.pulsePoints);
   }
 
   private createLabelElement(node: SpatialNode): void {
     const btn = document.createElement('button');
     btn.type = 'button';
+    btn.style.display = 'none';
     btn.className = `atlas-3d-label tier-${node.tier}`;
     btn.dataset.nodeId = node.id;
     btn.textContent = node.label;
@@ -596,6 +601,30 @@ export class UniverseScene {
       }
     }
 
+    // At overview distances a rendered star can be smaller than a fingertip.
+    // Resolve a near miss against visible instance centers in CSS pixels.
+    if (e.pointerType === 'touch') {
+      let closest: SpatialNode | undefined;
+      let radius = 11;
+      for (let i = 0; i < this.starInstancedMesh.count; i++) {
+        const node = this.instanceIdToRepoNode.get(i)!;
+        const state = this.nodeStates.get(node.id)!;
+        if (!state.visible) continue;
+        this.projVec.copy(state.currentPos).project(this.camera);
+        if (Math.abs(this.projVec.z) > 1) continue;
+        const distance = Math.hypot((this.projVec.x - this.pointer.x) * rect.width / 2,
+          (this.projVec.y - this.pointer.y) * rect.height / 2);
+        if (distance < radius) {
+          radius = distance;
+          closest = node;
+        }
+      }
+      if (closest) {
+        this.handleNodeActivation(closest);
+        return;
+      }
+    }
+
     // 2. Check Domain and Category meshes
     const interactiveMeshes: THREE.Object3D[] = [
       ...this.domainMeshes.values(),
@@ -612,6 +641,19 @@ export class UniverseScene {
       }
     }
   };
+
+  public setActive(active: boolean): void {
+    if (active === this.active) return;
+    this.active = active;
+    this.labelsLayer.hidden = !active;
+    if (active) {
+      this.clock.start();
+      this.startLoop();
+    } else if (this.rafId !== null) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+  }
 
   private startLoop(): void {
     const tick = (): void => {
@@ -720,14 +762,14 @@ export class UniverseScene {
       const src = this.nodeStates.get(edge.source);
       const tgt = this.nodeStates.get(edge.target);
       if (!src || !tgt || tgt.currentScale < 0.04) {
-        hPos.setXYZ(hIdx++, 0, 0, 0);
-        hPos.setXYZ(hIdx++, 0, 0, 0);
+        continue;
       } else {
         hPos.setXYZ(hIdx++, src.currentPos.x, src.currentPos.y, src.currentPos.z);
         hPos.setXYZ(hIdx++, tgt.currentPos.x, tgt.currentPos.y, tgt.currentPos.z);
       }
     }
-    hPos.needsUpdate = true;
+    this.hierarchyGeometry.setDrawRange(0, hIdx);
+    hPos.needsUpdate = hIdx > 0;
 
     // 2. Cross-Repository Relationships & Active Trail Edges
     const rPos = this.relationshipGeometry.attributes.position as THREE.BufferAttribute;
@@ -753,12 +795,10 @@ export class UniverseScene {
         if (isConnectedToSelected) {
           this.activeTrailPairs.push([src.currentPos, tgt.currentPos]);
         }
-      } else {
-        rPos.setXYZ(rIdx++, 0, 0, 0);
-        rPos.setXYZ(rIdx++, 0, 0, 0);
       }
     }
-    rPos.needsUpdate = true;
+    this.relationshipGeometry.setDrawRange(0, rIdx);
+    rPos.needsUpdate = rIdx > 0;
 
     // Add Discovery Trail step pairs to pulse animation
     if (this.activeTrailRepoIds.length >= 2) {
@@ -775,9 +815,6 @@ export class UniverseScene {
     const pPos = this.pulseGeometry.attributes.position as THREE.BufferAttribute;
     const totalParticles = pPos.count;
     if (this.activeTrailPairs.length === 0 || this.prefersReducedMotion) {
-      for (let i = 0; i < totalParticles; i++) {
-        pPos.setXYZ(i, 0, 0, 0);
-      }
       this.pulsePoints.visible = false;
     } else {
       this.pulsePoints.visible = true;
@@ -790,7 +827,7 @@ export class UniverseScene {
         pPos.setXYZ(i, x, y, z);
       }
     }
-    pPos.needsUpdate = true;
+    pPos.needsUpdate = this.pulsePoints.visible;
   }
 
   private updateProjectedLabels(): void {

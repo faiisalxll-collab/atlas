@@ -81,7 +81,10 @@ try {
           // Labels sit ten CSS pixels below their projected star centers.
           const box = await star.boundingBox();
           const starName = await star.textContent();
-          await page.touchscreen.tap(box.x + box.width / 2, box.y - 10);
+          const point = {x: box.x + box.width / 2, y: box.y - 10};
+          const target = await page.evaluate(({x,y})=>document.elementFromPoint(x,y)?.id,point);
+          assert.equal(target,'universe-canvas', 'Projected star must be reachable at ' + JSON.stringify(point));
+          await page.touchscreen.tap(point.x,point.y);
           await page.locator('.atlas-inspector h2').waitFor();
           assert.equal(await page.locator('.atlas-inspector h2').textContent(), starName);
         }

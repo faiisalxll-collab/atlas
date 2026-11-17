@@ -66,7 +66,8 @@ export async function loadUniverseDataset(basePath = import.meta.env.BASE_URL): 
   ]);
 
   if (!reposRes.ok || !posRes.ok || !metaRes.ok) {
-    throw new Error(`Failed to load ATLAS universe data (HTTP ${reposRes.status})`);
+    const failed = [reposRes, posRes, metaRes].find(response => !response.ok)!;
+    throw new Error(`Failed to load ATLAS universe data (HTTP ${failed.status})`);
   }
 
   const rawRepos = (await reposRes.json()) as unknown[];
@@ -95,13 +96,14 @@ export async function loadUniverseDataset(basePath = import.meta.env.BASE_URL): 
 
   const validRepoIds = new Set(repositories.map((r) => r.id));
   const relationships = (Array.isArray(rawRels) ? rawRels : []).filter(
-    (rel) => validRepoIds.has(rel.source) && validRepoIds.has(rel.target)
+    (rel) => rel && validRepoIds.has(rel.source) && validRepoIds.has(rel.target)
   );
 
   const trails = (Array.isArray(rawTrails) ? rawTrails : [])
+    .filter(trail => trail && Array.isArray(trail.steps))
     .map((trail) => ({
       ...trail,
-      steps: trail.steps.filter((s) => validRepoIds.has(s.repoId)),
+      steps: trail.steps.filter((s) => s && validRepoIds.has(s.repoId)),
     }))
     .filter((trail) => trail.steps.length >= 2);
 
