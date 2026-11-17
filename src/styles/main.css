@@ -443,3 +443,14 @@ body,
   .atlas-listview-overlay { top: 154px; }
   .atlas-search-input { font-size: 16px; }
 }
+
+.atlas-restore-hud {
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  inset-inline-end: max(12px, env(safe-area-inset-right));
+  z-index: 30;
+  min-height: 44px;
+  padding: 10px 14px;
+  background: var(--surface-elevated);
+  border-color: var(--border-accent);
+}

@@ -102,6 +102,11 @@ export class AtlasApp {
         const input = document.getElementById('atlas-search-input') as HTMLInputElement | null;
         input?.focus();
       } else if (e.key === 'Escape') {
+        if (!this.hudVisible) {
+          this.hudVisible = true;
+          this.renderHud();
+          return;
+        }
         if (this.selectedRepo) {
           this.clearSelection();
         }
@@ -132,6 +137,7 @@ export class AtlasApp {
   }
 
   public selectRepository(repo: RepositoryRecord, pushHistory = true): void {
+    this.hudVisible = true;
     this.selectedRepo = repo;
     this.activeDomain = repo.domain;
     this.activeCategory = repo.category;
@@ -179,6 +185,18 @@ export class AtlasApp {
 
     const totalCount = this.dataset.repositories.length;
     const syncDate = this.dataset.metadata.lastSyncedAt.slice(0, 10);
+
+    if (!this.hudVisible && this.scene) {
+      this.hudRoot.innerHTML = `
+        <button type="button" class="atlas-btn atlas-restore-hud" id="ctrl-toggle-hud"
+          aria-label="${isAr ? 'إظهار الواجهة' : 'Show controls'}">
+          ${isAr ? 'إظهار الواجهة' : 'Show controls'}
+        </button>
+      `;
+      this.attachHudListeners();
+      document.getElementById('ctrl-toggle-hud')?.focus({ preventScroll: true });
+      return;
+    }
 
     this.hudRoot.innerHTML = `
       <header class="atlas-topbar" role="banner">
@@ -259,8 +277,8 @@ export class AtlasApp {
         <button type="button" class="atlas-btn ${this.showConnections ? 'is-active' : ''}" id="ctrl-connections">
           ${isAr ? 'العلاقات' : 'Connections'}
         </button>
-        <button type="button" class="atlas-btn" id="ctrl-toggle-hud">
-          ${this.hudVisible ? (isAr ? 'إخفاء الواجهة' : 'Focus Mode') : isAr ? 'إظهار الواجهة' : 'Show HUD'}
+        <button type="button" class="atlas-btn" id="ctrl-toggle-hud" ${this.scene ? '' : 'disabled'}>
+          ${isAr ? '⛶ توسيع الشاشة' : '⛶ Expand view'}
         </button>
       </div>
     `;

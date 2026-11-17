@@ -68,6 +68,12 @@ try {
           await page.waitForFunction(old => Array.from(document.querySelectorAll('.tier-domain')).map(el => [el.style.display, el.style.transform]).flat().join('|') !== old, orbitStart);
           // Start the hierarchy test in its initial viewing direction.
           await page.reload();
+          await page.locator('#ctrl-toggle-hud').tap();
+          assert.equal(await page.locator('.atlas-topbar').count(), 0);
+          assert.equal(await page.locator('.atlas-controls-dock').count(), 0);
+          assert.equal(await page.locator('.atlas-subbar').count(), 0);
+          await page.locator('.atlas-restore-hud').tap();
+          await page.locator('.atlas-topbar').waitFor();
           await domain.tap();
           await page.locator('.tier-category:visible').first().tap();
           const star = page.locator('.tier-repository:visible').first();
