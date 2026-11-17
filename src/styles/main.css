@@ -484,3 +484,9 @@ body,
   .atlas-inspector { max-height: 58dvh; }
   .atlas-3d-label.tier-domain { max-width: 135px; overflow: hidden; text-overflow: ellipsis; }
 }
+
+@media (max-width: 768px) {
+  /* Anchor results below the entire wrapping header so the language switch stays reachable. */
+  .atlas-head-stack .atlas-search-wrap { position: static; }
+  .atlas-head-stack .atlas-search-results { max-height: min(280px, 42dvh); }
+}
