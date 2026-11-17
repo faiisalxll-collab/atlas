@@ -1,5 +1,19 @@
 [
   {
+    "id": "agensh_9bfe872d",
+    "name": "Agensh",
+    "category": "Agent Infrastructure",
+    "domain": "Infrastructure",
+    "whatItDoes": "إطار من Microsoft لتنسيق وكلاء البرمجة بشكل لامركزي؛ يتقاسمون المهام والنتائج والتحقق عبر مساحة عمل مشتركة.",
+    "howItHelps": "يساعد فرق التطوير على تجربة التعاون المتوازي بين الوكلاء ومقارنة الأداء مع وكيل واحد.",
+    "whyUnique": "يدعم Copilot وCodex وClaude Code وPi، مع Docker Compose ودليل إعادة التجارب؛ MIT. التوسع إلى 1024 وكيلًا بحثي وليس ضمانًا للأداء.",
+    "useCase": "تشغيل فريق صغير على مستودع تملكه لإصلاح مجموعة مهام، ثم مقارنة نتائج الاختبارات والتكلفة مع وكيل منفرد.",
+    "targetAudience": "مطورو الوكلاء وفرق البنية التحتية والباحثون في الأنظمة متعددة الوكلاء",
+    "githubUrl": "https://github.com/microsoft/Agensh",
+    "addedAt": "2026-11-16",
+    "sheetRow": 2
+  },
+  {
     "id": "agent8088_5b539d7f",
     "name": "Agent8088",
     "category": "Agent Infrastructure",
@@ -11,7 +25,7 @@
     "targetAudience": "مطورو Local AI ووكلاء البرمجة والباحثون في موثوقية النماذج",
     "githubUrl": "https://github.com/palindrome-rl/AGENT8088",
     "addedAt": "2026-11-11",
-    "sheetRow": 2
+    "sheetRow": 3
   },
   {
     "id": "agentgateway__agentgateway",
@@ -25,20 +39,6 @@
     "targetAudience": "فرق AI والمنصات والأمن",
     "githubUrl": "https://github.com/agentgateway/agentgateway",
     "addedAt": null,
-    "sheetRow": 3
-  },
-  {
-    "id": "agensh_9bfe872d",
-    "name": "Agensh",
-    "category": "Agent Infrastructure",
-    "domain": "Infrastructure",
-    "whatItDoes": "إطار من Microsoft لتنسيق وكلاء البرمجة بشكل لامركزي؛ يتقاسمون المهام والنتائج والتحقق عبر مساحة عمل مشتركة.",
-    "howItHelps": "يساعد فرق التطوير على تجربة التعاون المتوازي بين الوكلاء ومقارنة الأداء مع وكيل واحد.",
-    "whyUnique": "يدعم Copilot وCodex وClaude Code وPi، مع Docker Compose ودليل إعادة التجارب؛ MIT. التوسع إلى 1024 وكيلًا بحثي وليس ضمانًا للأداء.",
-    "useCase": "تشغيل فريق صغير على مستودع تملكه لإصلاح مجموعة مهام، ثم مقارنة نتائج الاختبارات والتكلفة مع وكيل منفرد.",
-    "targetAudience": "مطورو الوكلاء وفرق البنية التحتية والباحثون في الأنظمة متعددة الوكلاء",
-    "githubUrl": "https://github.com/microsoft/Agensh",
-    "addedAt": "2026-11-16",
     "sheetRow": 4
   },
   {
@@ -1008,6 +1008,20 @@
     "sheetRow": 73
   },
   {
+    "id": "erkamyaman__rust-anything",
+    "name": "rust-anything",
+    "category": "Developer Tools",
+    "domain": "Engineering",
+    "whatItDoes": "أداة لترحيل أجزاء من تطبيقات JavaScript وPython وGo وC وRuby وJava إلى Rust مع مقارنة السلوك بالنسخة الأصلية.",
+    "howItHelps": "تساعد في تسريع المسارات الثقيلة دون إعادة كتابة المشروع دفعة واحدة وتقلل مخاطر اختلاف النتائج.",
+    "whyUnique": "تسجل حالات تشغيل وتعيد تشغيلها على النسخة الجديدة وتتكامل مع وكلاء البرمجة؛ اختبارات التسجيل لا تغطي الحالات التي لم تُرصد، وأرقام التسريع من المشروع.",
+    "useCase": "اختيار دالة بحث بطيئة في تطبيق Python وتسجيل حالات تشغيلها ثم نقلها إلى Rust ومقارنة النتائج والأداء.",
+    "targetAudience": "مطورو البرمجيات ومهندسو الأداء ووكلاء البرمجة",
+    "githubUrl": "https://github.com/erkamyaman/rust-anything",
+    "addedAt": null,
+    "sheetRow": 74
+  },
+  {
     "id": "shanselman__sandbox-mcp",
     "name": "sandbox-mcp",
     "category": "Developer Tools",
@@ -1019,7 +1033,7 @@
     "targetAudience": "مطورو Windows وفرق QA واختبار التطبيقات ووكلاء البرمجة",
     "githubUrl": "https://github.com/shanselman/sandbox-mcp",
     "addedAt": null,
-    "sheetRow": 74
+    "sheetRow": 75
   },
   {
     "id": "kitlangton__scrawl",
@@ -1033,7 +1047,7 @@
     "targetAudience": "مطورو الواجهات وفرق الاختبار ومستخدمو وكلاء البرمجة",
     "githubUrl": "https://github.com/kitlangton/scrawl",
     "addedAt": "2026-10-20",
-    "sheetRow": 75
+    "sheetRow": 76
   },
   {
     "id": "caru-ini__stack-diagram",
@@ -1047,7 +1061,7 @@
     "targetAudience": "مهندسو البرمجيات وDevOps ومطورو SaaS وصنّاع الشروحات",
     "githubUrl": "https://github.com/caru-ini/stack-diagram",
     "addedAt": null,
-    "sheetRow": 76
+    "sheetRow": 77
   },
   {
     "id": "jetbrains__thinkrail",
@@ -1061,7 +1075,35 @@
     "targetAudience": "المطورون وفرق البرمجة ومستخدمو وكلاء AI وGitHub",
     "githubUrl": "https://github.com/JetBrains/thinkrail",
     "addedAt": null,
-    "sheetRow": 77
+    "sheetRow": 78
+  },
+  {
+    "id": "astral-sh__ty",
+    "name": "ty",
+    "category": "Developer Tools",
+    "domain": "Engineering",
+    "whatItDoes": "مدقق أنواع Python وخادم لغة للمحررات مكتوب بلغة Rust من فريق Astral.",
+    "howItHelps": "يساعد المطور يكتشف أخطاء الأنواع مبكرًا ويستفيد من الإكمال والتنقل والتشخيص داخل المحرر.",
+    "whyUnique": "يوفر تحليلًا تزايديًا ودمجًا مع VS Code ومحررات أخرى؛ المشروع في مرحلة beta وقد تتغير بعض السلوكيات.",
+    "useCase": "تشغيل uvx ty check داخل مشروع Python وإضافة فحص الأنواع إلى CI.",
+    "targetAudience": "مطورو Python وفرق جودة البرمجيات",
+    "githubUrl": "https://github.com/astral-sh/ty",
+    "addedAt": null,
+    "sheetRow": 79
+  },
+  {
+    "id": "vercel-labs__ui",
+    "name": "UI SDK",
+    "category": "Developer Tools",
+    "domain": "Engineering",
+    "whatItDoes": "مكتبة سلوكيات واجهات من Vercel Labs تساعد الوكلاء والمطورين على بناء عناصر تفاعلية قابلة للوصول عبر عدة أطر عمل.",
+    "howItHelps": "توفر منطق لوحة المفاتيح والتركيز والاختيار والقوائم والسحب والإفلات بدل إعادة كتابته لكل إطار.",
+    "whyUnique": "نواة واحدة مع محولات React وVue وSvelte وSolid وWeb Components؛ المشروع beta ويحتاج مراجعة إمكانية الوصول في التطبيق النهائي.",
+    "useCase": "إنشاء حقل بحث بقائمة اقتراحات وتنقل بلوحة المفاتيح في React ثم نقل السلوك نفسه إلى Vue.",
+    "targetAudience": "مطورو الواجهات ووكلاء البرمجة وفرق التصميم",
+    "githubUrl": "https://github.com/vercel-labs/ui",
+    "addedAt": null,
+    "sheetRow": 80
   },
   {
     "id": "charonyuu__whatsmyagentdoing",
@@ -1075,7 +1117,7 @@
     "targetAudience": "مستخدمو وكلاء البرمجة وفرق التطوير والأتمتة",
     "githubUrl": "https://github.com/Charonyuu/whatsmyagentdoing",
     "addedAt": null,
-    "sheetRow": 78
+    "sheetRow": 81
   },
   {
     "id": "max-sixty__worktrunk",
@@ -1089,7 +1131,7 @@
     "targetAudience": "مطورو البرمجيات ومستخدمو وكلاء البرمجة وفرق Git وDevOps",
     "githubUrl": "https://github.com/max-sixty/worktrunk",
     "addedAt": null,
-    "sheetRow": 79
+    "sheetRow": 82
   },
   {
     "id": "ziya-ai__ziya",
@@ -1103,7 +1145,7 @@
     "targetAudience": "المطورون وفرق DevOps وSRE والأمن والمهندسون",
     "githubUrl": "https://github.com/ziya-ai/ziya",
     "addedAt": null,
-    "sheetRow": 80
+    "sheetRow": 83
   },
   {
     "id": "datalab-to__indra",
@@ -1117,7 +1159,21 @@
     "targetAudience": "مطورو معالجة المستندات وفرق الأرشفة والبيانات وRAG",
     "githubUrl": "https://github.com/datalab-to/indra",
     "addedAt": null,
-    "sheetRow": 81
+    "sheetRow": 84
+  },
+  {
+    "id": "microsoft__markitdown",
+    "name": "MarkItDown",
+    "category": "Document AI",
+    "domain": "Engineering",
+    "whatItDoes": "أداة Python من Microsoft تحوّل PDF وWord وExcel وPowerPoint وHTML وملفات أخرى إلى Markdown مهيأ لمعالجة النماذج اللغوية.",
+    "howItHelps": "تختصر تجهيز المستندات للبحث الدلالي وRAG واستخراج المعلومات مع الحفاظ على العناوين والجداول والروابط قدر الإمكان.",
+    "whyUnique": "تدعم صيغًا متعددة من واجهة واحدة وإضافات اختيارية؛ بعض ميزات وصف الصور والتفريغ الصوتي تحتاج خدمات خارجية. يجب عزل الملفات غير الموثوقة بسبب صلاحيات القراءة.",
+    "useCase": "تحويل مجموعة مستندات مشروع إلى Markdown ثم فهرستها في محرك بحث داخلي.",
+    "targetAudience": "مطورو RAG ووكلاء المستندات وتحليل البيانات",
+    "githubUrl": "https://github.com/microsoft/markitdown",
+    "addedAt": null,
+    "sheetRow": 85
   },
   {
     "id": "srivnamrata__multixtract",
@@ -1131,7 +1187,7 @@
     "targetAudience": "مطورو RAG والبحث المؤسسي وفرق البيانات والأرشفة",
     "githubUrl": "https://github.com/srivnamrata/multixtract",
     "addedAt": null,
-    "sheetRow": 82
+    "sheetRow": 86
   },
   {
     "id": "n24q02m__imagine-mcp",
@@ -1145,7 +1201,7 @@
     "targetAudience": "مطورو الوكلاء وصناع المحتوى ومنتجات الصور والفيديو",
     "githubUrl": "https://github.com/n24q02m/imagine-mcp",
     "addedAt": null,
-    "sheetRow": 83
+    "sheetRow": 87
   },
   {
     "id": "openmoss__moss-image",
@@ -1159,7 +1215,7 @@
     "targetAudience": "مصممو الصور والباحثون ومطورو نماذج التوليد وفرق المحتوى",
     "githubUrl": "https://github.com/OpenMOSS/MOSS-Image",
     "addedAt": null,
-    "sheetRow": 84
+    "sheetRow": 88
   },
   {
     "id": "storytold__photocraft",
@@ -1173,7 +1229,7 @@
     "targetAudience": "المصممون وصناع المحتوى ومطورو أدوات الصور ووكلاء الأتمتة",
     "githubUrl": "https://github.com/storytold/photocraft",
     "addedAt": null,
-    "sheetRow": 85
+    "sheetRow": 89
   },
   {
     "id": "patch-gg__pixelfx",
@@ -1187,7 +1243,7 @@
     "targetAudience": "مطورو الألعاب المستقلة وفنانو Pixel Art وصنّاع المؤثرات",
     "githubUrl": "https://github.com/patch-gg/pixelfx",
     "addedAt": null,
-    "sheetRow": 86
+    "sheetRow": 90
   },
   {
     "id": "bentoml__llm-optimizer",
@@ -1201,7 +1257,7 @@
     "targetAudience": "فرق البنية التحتية وLLM",
     "githubUrl": "https://github.com/bentoml/llm-optimizer",
     "addedAt": null,
-    "sheetRow": 87
+    "sheetRow": 91
   },
   {
     "id": "deepseek-ai__deepinfer",
@@ -1215,7 +1271,7 @@
     "targetAudience": "فرق LLM Infrastructure وMLOps ومهندسو GPU وخدمات النماذج",
     "githubUrl": "https://github.com/deepseek-ai/DeepInfer",
     "addedAt": "2026-10-23",
-    "sheetRow": 88
+    "sheetRow": 92
   },
   {
     "id": "headroomlabs-ai__headroom",
@@ -1229,7 +1285,7 @@
     "targetAudience": "مهندسو AI Agents وRAG وLLM Infrastructure وفرق تحسين التكاليف",
     "githubUrl": "https://github.com/headroomlabs-ai/headroom",
     "addedAt": null,
-    "sheetRow": 89
+    "sheetRow": 93
   },
   {
     "id": "xl03-bit__sm120-nvfp4-training",
@@ -1243,7 +1299,7 @@
     "targetAudience": "مهندسو تعلم الآلة وباحثو ضغط النماذج وهواة تدريب النماذج محليًا",
     "githubUrl": "https://github.com/xl03-bit/sm120-nvfp4-training",
     "addedAt": null,
-    "sheetRow": 90
+    "sheetRow": 94
   },
   {
     "id": "atomicbot-ai__atomic-agent",
@@ -1257,7 +1313,7 @@
     "targetAudience": "المطورون ومحبو Local AI والخصوصية والأتمتة",
     "githubUrl": "https://github.com/AtomicBot-ai/atomic-agent",
     "addedAt": null,
-    "sheetRow": 91
+    "sheetRow": 95
   },
   {
     "id": "cactus-compute__cactus",
@@ -1271,7 +1327,7 @@
     "targetAudience": "مطورو Edge AI وتطبيقات الخصوصية والأجهزة",
     "githubUrl": "https://github.com/cactus-compute/cactus",
     "addedAt": "2026-11-08",
-    "sheetRow": 92
+    "sheetRow": 96
   },
   {
     "id": "justvugg__colibri",
@@ -1285,7 +1341,7 @@
     "targetAudience": "باحثو Local AI ومطورو النماذج والمهتمون بالخصوصية واستدلال MoE والبنية التحتية",
     "githubUrl": "https://github.com/JustVugg/colibri",
     "addedAt": null,
-    "sheetRow": 93
+    "sheetRow": 97
   },
   {
     "id": "qualcomm__geniex",
@@ -1299,7 +1355,7 @@
     "targetAudience": "مطورو تطبيقات Android وEdge AI ومهندسو أجهزة Snapdragon",
     "githubUrl": "https://github.com/qualcomm/GenieX",
     "addedAt": null,
-    "sheetRow": 94
+    "sheetRow": 98
   },
   {
     "id": "frigadehq__hob",
@@ -1313,7 +1369,7 @@
     "targetAudience": "المستخدمون المهتمون بالخصوصية والطلاب وفرق الأعمال ومبتدئو Local AI",
     "githubUrl": "https://github.com/FrigadeHQ/hob",
     "addedAt": null,
-    "sheetRow": 95
+    "sheetRow": 99
   },
   {
     "id": "ahtx__kindi",
@@ -1327,7 +1383,7 @@
     "targetAudience": "هواة Local AI والباحثون في الاستدلال ومهندسو العتاد الاقتصادي",
     "githubUrl": "https://github.com/ahtx/kindi",
     "addedAt": "2026-10-31",
-    "sheetRow": 96
+    "sheetRow": 100
   },
   {
     "id": "drawthingsai__local-code-community",
@@ -1341,7 +1397,7 @@
     "targetAudience": "مستخدمو Apple والمطورون والباحثون عن وكلاء محليين وخصوصية أعلى",
     "githubUrl": "https://github.com/drawthingsai/local-code-community",
     "addedAt": null,
-    "sheetRow": 97
+    "sheetRow": 101
   },
   {
     "id": "generated-computers__locals",
@@ -1355,7 +1411,21 @@
     "targetAudience": "مستخدمو Mac Apple Silicon ومطورو Local AI ووكلاء البرمجة",
     "githubUrl": "https://github.com/Generated-Computers/Locals",
     "addedAt": null,
-    "sheetRow": 98
+    "sheetRow": 102
+  },
+  {
+    "id": "huawei-csl__macaq",
+    "name": "MACaQ",
+    "category": "Local AI",
+    "domain": "Infrastructure",
+    "whatItDoes": "أدوات من Huawei CSL لتكميم نماذج النص والصورة والفيديو والصوت لتقليل الذاكرة المطلوبة للاستدلال.",
+    "howItHelps": "تساعد على تشغيل نماذج أكبر محليًا أو تقليل استهلاك الذاكرة عند نشرها.",
+    "whyUnique": "تدعم مسارات GGUF مع llama.cpp وvLLM وDiffusers وPyTorch؛ تدعي الورقة تحسين جودة وسرعة التكميم، ولم تُختبر النتائج هنا استقلاليًا.",
+    "useCase": "تكميم نموذج Qwen إلى GGUF ومقارنة حجم الملف وجودة الإجابات قبل نشره محليًا.",
+    "targetAudience": "مطورو Local AI ومهندسو الاستدلال والباحثون في ضغط النماذج",
+    "githubUrl": "https://github.com/huawei-csl/MACaQ",
+    "addedAt": null,
+    "sheetRow": 103
   },
   {
     "id": "makazhanalpamys__soup",
@@ -1369,7 +1439,7 @@
     "targetAudience": "باحثو Local AI ومهندسو النماذج والمطورون أصحاب العتاد المحدود",
     "githubUrl": "https://github.com/MakazhanAlpamys/Soup",
     "addedAt": null,
-    "sheetRow": 99
+    "sheetRow": 104
   },
   {
     "id": "niko1221__strata",
@@ -1383,7 +1453,7 @@
     "targetAudience": "المطورون ومحبو Local AI والخصوصية وأصحاب الأجهزة ذات الذاكرة الكبيرة",
     "githubUrl": "https://github.com/Niko1221/Strata",
     "addedAt": "2026-10-23",
-    "sheetRow": 100
+    "sheetRow": 105
   },
   {
     "id": "frigadehq__yogurt",
@@ -1397,7 +1467,7 @@
     "targetAudience": "فرق العمل والباحثون ومستخدمو Local AI ومطورو أدوات الاجتماعات",
     "githubUrl": "https://github.com/FrigadeHQ/yogurt",
     "addedAt": "2026-11-14",
-    "sheetRow": 101
+    "sheetRow": 106
   },
   {
     "id": "timoncool__yue2-studio",
@@ -1411,7 +1481,7 @@
     "targetAudience": "المنتجون الموسيقيون وصناع المحتوى ومطورو أدوات الصوت",
     "githubUrl": "https://github.com/timoncool/YuE2-Studio",
     "addedAt": "2026-10-20",
-    "sheetRow": 102
+    "sheetRow": 107
   },
   {
     "id": "mcpjam__inspector",
@@ -1425,7 +1495,7 @@
     "targetAudience": "مطورو MCP وChatGPT Apps",
     "githubUrl": "https://github.com/MCPJam/inspector",
     "addedAt": null,
-    "sheetRow": 103
+    "sheetRow": 108
   },
   {
     "id": "dcc-mcp__dcc-mcp-core",
@@ -1439,7 +1509,7 @@
     "targetAudience": "استوديوهات 3D ومطورو الألعاب والأتمتة الإبداعية ومطورو MCP",
     "githubUrl": "https://github.com/dcc-mcp/dcc-mcp-core",
     "addedAt": null,
-    "sheetRow": 104
+    "sheetRow": 109
   },
   {
     "id": "aipotheosis-labs__gate22",
@@ -1453,7 +1523,7 @@
     "targetAudience": "فرق Platform وDevEx والأمن",
     "githubUrl": "https://github.com/aipotheosis-labs/gate22",
     "addedAt": null,
-    "sheetRow": 105
+    "sheetRow": 110
   },
   {
     "id": "mikkoparkkola__mcp-gateway",
@@ -1467,7 +1537,7 @@
     "targetAudience": "فرق المنصات ومطورو MCP",
     "githubUrl": "https://github.com/MikkoParkkola/mcp-gateway",
     "addedAt": null,
-    "sheetRow": 106
+    "sheetRow": 111
   },
   {
     "id": "traceloop__opentelemetry-mcp-server",
@@ -1481,7 +1551,7 @@
     "targetAudience": "مهندسو المنصات وSRE ومطورو الوكلاء",
     "githubUrl": "https://github.com/traceloop/opentelemetry-mcp-server",
     "addedAt": "2026-11-08",
-    "sheetRow": 107
+    "sheetRow": 112
   },
   {
     "id": "reason-machines__reason-network",
@@ -1495,7 +1565,7 @@
     "targetAudience": "فرق البرمجة الموزعة ومستخدمو عدة وكلاء AI ومطورو MCP",
     "githubUrl": "https://github.com/reason-machines/reason-network",
     "addedAt": null,
-    "sheetRow": 108
+    "sheetRow": 113
   },
   {
     "id": "ressl__mcp-firewall",
@@ -1509,7 +1579,7 @@
     "targetAudience": "فرق الأمن والامتثال وMCP",
     "githubUrl": "https://github.com/ressl/mcp-firewall",
     "addedAt": null,
-    "sheetRow": 109
+    "sheetRow": 114
   },
   {
     "id": "openziti__mcp-gateway",
@@ -1523,7 +1593,7 @@
     "targetAudience": "فرق الأمن والبنية التحتية وMCP",
     "githubUrl": "https://github.com/openziti/mcp-gateway",
     "addedAt": null,
-    "sheetRow": 110
+    "sheetRow": 115
   },
   {
     "id": "ht88-exe__steiner",
@@ -1537,7 +1607,7 @@
     "targetAudience": "فرق الأمن ووكلاء AI",
     "githubUrl": "https://github.com/HT88-exe/steiner",
     "addedAt": null,
-    "sheetRow": 111
+    "sheetRow": 116
   },
   {
     "id": "moonoops__droy",
@@ -1551,7 +1621,7 @@
     "targetAudience": "مطورو Android ووكلاء الأجهزة وتجارب الأتمتة ومهتمو AI على الجوال",
     "githubUrl": "https://github.com/moonoops/Droy",
     "addedAt": "2026-10-28",
-    "sheetRow": 112
+    "sheetRow": 117
   },
   {
     "id": "josssphzhou__poki",
@@ -1565,7 +1635,7 @@
     "targetAudience": "مطورو iOS وQA ووكلاء الأجهزة وأتمتة الجوال",
     "githubUrl": "https://github.com/JosssphZhou/poki",
     "addedAt": null,
-    "sheetRow": 113
+    "sheetRow": 118
   },
   {
     "id": "chutingyean__agent-cockpit",
@@ -1579,7 +1649,7 @@
     "targetAudience": "الباحثون ومحللو البيانات وفرق R&D ومطورو وكلاء البحث",
     "githubUrl": "https://github.com/chutingyean/Agent-Cockpit",
     "addedAt": null,
-    "sheetRow": 114
+    "sheetRow": 119
   },
   {
     "id": "sakanaai__ai-scientist-v3",
@@ -1593,7 +1663,7 @@
     "targetAudience": "باحثو AI وفرق R&D والجامعات ومهندسو التقييم والتجارب",
     "githubUrl": "https://github.com/SakanaAI/AI-Scientist-v3",
     "addedAt": null,
-    "sheetRow": 115
+    "sheetRow": 120
   },
   {
     "id": "mvanhorn__last30days-skill",
@@ -1607,7 +1677,7 @@
     "targetAudience": "باحثو الاتجاهات وOSINT وصناع محتوى X والمحللون وفرق المنتجات",
     "githubUrl": "https://github.com/mvanhorn/last30days-skill",
     "addedAt": null,
-    "sheetRow": 116
+    "sheetRow": 121
   },
   {
     "id": "zhuyansen__new-term-radar",
@@ -1621,7 +1691,7 @@
     "targetAudience": "باحثو AI وصناع المحتوى التقني ومحللو الاتجاهات وفرق SEO",
     "githubUrl": "https://github.com/zhuyansen/new-term-radar",
     "addedAt": null,
-    "sheetRow": 117
+    "sheetRow": 122
   },
   {
     "id": "ruc-nlpir__searchclaw",
@@ -1635,7 +1705,7 @@
     "targetAudience": "الباحثون وصناع المحتوى والمحللون وفرق R&D والمطورون",
     "githubUrl": "https://github.com/RUC-NLPIR/SearchClaw",
     "addedAt": "2026-10-06",
-    "sheetRow": 118
+    "sheetRow": 123
   },
   {
     "id": "hybridrobotics__supermimic",
@@ -1649,7 +1719,7 @@
     "targetAudience": "باحثو الروبوتات والتعلم المعزز والمحاكاة ومهندسو التحكم",
     "githubUrl": "https://github.com/HybridRobotics/supermimic",
     "addedAt": null,
-    "sheetRow": 119
+    "sheetRow": 124
   },
   {
     "id": "yjid__kensaku",
@@ -1663,7 +1733,7 @@
     "targetAudience": "الباحثون والمطورون وفرق التوثيق ومستخدمو الملفات الكبيرة",
     "githubUrl": "https://github.com/yjid/kensaku",
     "addedAt": null,
-    "sheetRow": 120
+    "sheetRow": 125
   },
   {
     "id": "yolow92__pagesift",
@@ -1677,7 +1747,7 @@
     "targetAudience": "مهندسو البيانات وRAG والبحث وفرق OSINT ومطورو AI Agents",
     "githubUrl": "https://github.com/YOLOW92/pagesift",
     "addedAt": "2026-10-28",
-    "sheetRow": 121
+    "sheetRow": 126
   },
   {
     "id": "xerj-org__xerj",
@@ -1691,7 +1761,7 @@
     "targetAudience": "المطورون وفرق البحث وRAG والبيانات وأمن التطبيقات",
     "githubUrl": "https://github.com/xerj-org/xerj",
     "addedAt": null,
-    "sheetRow": 122
+    "sheetRow": 127
   },
   {
     "id": "frankshan001__cutvoke",
@@ -1705,7 +1775,7 @@
     "targetAudience": "صناع المحتوى ومحررو الفيديو ومطورو MCP وأتمتة الوسائط",
     "githubUrl": "https://github.com/frankShan001/CutVoke",
     "addedAt": "2026-11-11",
-    "sheetRow": 123
+    "sheetRow": 128
   },
   {
     "id": "swax__dub-anything",
@@ -1719,7 +1789,7 @@
     "targetAudience": "منتجو الفيديو والمترجمون وصناع المحتوى وفرق التوطين",
     "githubUrl": "https://github.com/swax/dub-anything",
     "addedAt": "2026-10-20",
-    "sheetRow": 124
+    "sheetRow": 129
   },
   {
     "id": "0xs4n4tg__kinetograph",
@@ -1733,7 +1803,7 @@
     "targetAudience": "صناع الفيديو والمحتوى التقني ومطورو Remotion وواجهات MCP",
     "githubUrl": "https://github.com/0xS4N4TG/kinetograph",
     "addedAt": "2026-10-28",
-    "sheetRow": 125
+    "sheetRow": 130
   },
   {
     "id": "openfilm__openfilm",
@@ -1747,7 +1817,7 @@
     "targetAudience": "صناع محتوى X ومطورو أدوات الفيديو والمصممون ووكلاء البرمجة",
     "githubUrl": "https://github.com/openfilm/openfilm",
     "addedAt": null,
-    "sheetRow": 126
+    "sheetRow": 131
   },
   {
     "id": "calesthio__openmontage",
@@ -1761,7 +1831,7 @@
     "targetAudience": "صناع المحتوى والوثائقيات ومطورو أدوات الفيديو وفرق التسويق",
     "githubUrl": "https://github.com/calesthio/OpenMontage",
     "addedAt": null,
-    "sheetRow": 127
+    "sheetRow": 132
   },
   {
     "id": "juneyaooo__rea-video",
@@ -1775,7 +1845,7 @@
     "targetAudience": "صناع فيديو X والتسويق والمونتاج والباحثون في الوسائط",
     "githubUrl": "https://github.com/JuneYaooo/rea-video",
     "addedAt": null,
-    "sheetRow": 128
+    "sheetRow": 133
   },
   {
     "id": "voyager-so__vork",
@@ -1789,7 +1859,7 @@
     "targetAudience": "مطورو الرسوم والمؤثرات البصرية وصناع الفيديو وفرق 3D",
     "githubUrl": "https://github.com/voyager-so/vork",
     "addedAt": null,
-    "sheetRow": 129
+    "sheetRow": 134
   },
   {
     "id": "actionow-ai__vvv",
@@ -1803,7 +1873,7 @@
     "targetAudience": "صناع محتوى X والفيديو القصير والمصممون ومطورو وكلاء الوسائط",
     "githubUrl": "https://github.com/actionow-ai/vvv",
     "addedAt": null,
-    "sheetRow": 130
+    "sheetRow": 135
   },
   {
     "id": "weftcut__weftcut",
@@ -1817,7 +1887,7 @@
     "targetAudience": "صناع المحتوى ومحررو الفيديو ومطورو وكلاء AI والأتمتة الإعلامية",
     "githubUrl": "https://github.com/WeftCut/WeftCut",
     "addedAt": null,
-    "sheetRow": 131
+    "sheetRow": 136
   },
   {
     "id": "mutonby__agentring",
@@ -1831,7 +1901,7 @@
     "targetAudience": "مطورو الوكلاء والأتمتة وفرق البرمجة ومستخدمو Android",
     "githubUrl": "https://github.com/mutonby/agentring",
     "addedAt": "2026-10-31",
-    "sheetRow": 132
+    "sheetRow": 137
   },
   {
     "id": "bolna-ai__bolna",
@@ -1845,7 +1915,7 @@
     "targetAudience": "الشركات ومطورو الوكلاء الهاتفيين",
     "githubUrl": "https://github.com/bolna-ai/bolna",
     "addedAt": null,
-    "sheetRow": 133
+    "sheetRow": 138
   },
   {
     "id": "dograh-hq__dograh",
@@ -1859,7 +1929,7 @@
     "targetAudience": "الشركات ومراكز الاتصال ومطورو Voice AI والأتمتة",
     "githubUrl": "https://github.com/dograh-hq/dograh",
     "addedAt": null,
-    "sheetRow": 134
+    "sheetRow": 139
   },
   {
     "id": "majorminorlabs__hermes-voice",
@@ -1873,7 +1943,7 @@
     "targetAudience": "هواة المنازل الذكية وVoice AI ومستخدمو Home Assistant ومطورو الوكلاء",
     "githubUrl": "https://github.com/majorminorlabs/hermes-voice",
     "addedAt": null,
-    "sheetRow": 135
+    "sheetRow": 140
   },
   {
     "id": "c4rohan__lampline",
@@ -1887,7 +1957,7 @@
     "targetAudience": "مطورو Voice AI ومراكز الاتصال وفرق الجودة وأتمتة خدمة العملاء",
     "githubUrl": "https://github.com/C4rohan/Lampline",
     "addedAt": "2026-10-31",
-    "sheetRow": 136
+    "sheetRow": 141
   },
   {
     "id": "modelguide__modelguide",
@@ -1901,7 +1971,7 @@
     "targetAudience": "فرق خدمة العملاء وVoice AI",
     "githubUrl": "https://github.com/modelguide/modelguide",
     "addedAt": null,
-    "sheetRow": 137
+    "sheetRow": 142
   },
   {
     "id": "nvidia-nemo__labs-voice-agent",
@@ -1915,7 +1985,7 @@
     "targetAudience": "فرق Voice AI والباحثون",
     "githubUrl": "https://github.com/NVIDIA-NeMo/labs-Voice-Agent",
     "addedAt": null,
-    "sheetRow": 138
+    "sheetRow": 143
   },
   {
     "id": "katipally__openlive",
@@ -1929,7 +1999,7 @@
     "targetAudience": "المطورون ومستخدمو وكلاء البرمجة ومحبو Local AI وإمكانية الوصول؛ الاستخدام العربي يحتاج تحققًا مسبقًا.",
     "githubUrl": "https://github.com/katipally/openlive",
     "addedAt": "2026-10-16",
-    "sheetRow": 139
+    "sheetRow": 144
   },
   {
     "id": "patterai__patter",
@@ -1943,7 +2013,7 @@
     "targetAudience": "مطورو Voice AI والشركات ومراكز الاتصال ومهندسو التكامل",
     "githubUrl": "https://github.com/PatterAI/Patter",
     "addedAt": null,
-    "sheetRow": 140
+    "sheetRow": 145
   },
   {
     "id": "pegainfer-project__pega-omni",
@@ -1957,7 +2027,7 @@
     "targetAudience": "مهندسو Voice AI وفرق البنية التحتية والاستدلال",
     "githubUrl": "https://github.com/pegainfer-project/pega-omni",
     "addedAt": "2026-10-20",
-    "sheetRow": 141
+    "sheetRow": 146
   },
   {
     "id": "telecmi__agents",
@@ -1971,7 +2041,7 @@
     "targetAudience": "مطورو مراكز الاتصال وVoice AI",
     "githubUrl": "https://github.com/telecmi/agents",
     "addedAt": null,
-    "sheetRow": 142
+    "sheetRow": 147
   },
   {
     "id": "qwenaudio__qwen-audio-agent",
@@ -1985,7 +2055,7 @@
     "targetAudience": "مطورو Voice AI ووكلاء البرمجة وتطبيقات المساعدة الصوتية",
     "githubUrl": "https://github.com/QwenAudio/qwen-audio-agent",
     "addedAt": null,
-    "sheetRow": 143
+    "sheetRow": 148
   },
   {
     "id": "timoncool__speech-studio",
@@ -1999,7 +2069,7 @@
     "targetAudience": "صناع البودكاست والفيديو والمترجمون ومطورو وكلاء الصوت على Windows",
     "githubUrl": "https://github.com/timoncool/speech-studio",
     "addedAt": null,
-    "sheetRow": 144
+    "sheetRow": 149
   },
   {
     "id": "ten-framework__ten-framework",
@@ -2013,7 +2083,7 @@
     "targetAudience": "مطورو الصوت والمنتجات التفاعلية",
     "githubUrl": "https://github.com/TEN-framework/ten-framework",
     "addedAt": null,
-    "sheetRow": 145
+    "sheetRow": 150
   },
   {
     "id": "ananas2916__tsukumo",
@@ -2027,7 +2097,7 @@
     "targetAudience": "مستخدمو Windows ووكلاء البرمجة وهواة المساعدات الصوتية والتجارب التفاعلية",
     "githubUrl": "https://github.com/Ananas2916/tsukumo",
     "addedAt": null,
-    "sheetRow": 146
+    "sheetRow": 151
   },
   {
     "id": "fluxions-ai__vui",
@@ -2041,6 +2111,20 @@
     "targetAudience": "مطورو Voice AI والمساعدات المحلية والتطبيقات التفاعلية",
     "githubUrl": "https://github.com/fluxions-ai/vui",
     "addedAt": null,
-    "sheetRow": 147
+    "sheetRow": 152
+  },
+  {
+    "id": "zyphra__zonos3-mini",
+    "name": "ZONOS3-Mini",
+    "category": "Voice AI",
+    "domain": "Perception",
+    "whatItDoes": "بيئة تشغيل مفتوحة لنموذج Zyphra متعدد اللغات لتحويل النص إلى كلام، مع خوادم محلية وواجهة متصفح.",
+    "howItHelps": "تتيح بناء خدمات نطق أو تجربة أصوات محلية عبر HTTP API أو WebGPU دون الاعتماد الكامل على مزود سحابي.",
+    "whyUnique": "توفر مسارات CUDA وApple MLX وC++/ggml وWebGPU داخل المتصفح؛ الأداء ودعم العربية يحتاجان اختبارًا فعليًا بحسب الجهاز والنموذج.",
+    "useCase": "تشغيل واجهة النطق على جهاز محلي وتوصيلها بوكيل يقرأ الردود صوتيًا.",
+    "targetAudience": "مطورو Voice AI والمساعدات الصوتية ومشاريع Local AI",
+    "githubUrl": "https://github.com/Zyphra/ZONOS3-Mini",
+    "addedAt": null,
+    "sheetRow": 153
   }
 ]
