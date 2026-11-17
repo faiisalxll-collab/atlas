@@ -2,14 +2,14 @@ import { chromium, devices } from '@playwright/test';
 import assert from 'node:assert/strict';
 import { mkdir } from 'node:fs/promises';
 
-const url = 'https://faiisalxll-collab.github.io/atlas/';
+const url = process.env.ATLAS_AUDIT_URL ?? 'https://faiisalxll-collab.github.io/atlas/';
 const phase = process.argv[2];
 const dir = 'audit/' + phase;
 await mkdir(dir, { recursive: true });
 const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
 try {
   const sizes = [[375,667], [390,844], [430,932], [1440,900]];
-  if (phase === 'after') sizes.push([390,844,1000]);
+  if (phase !== 'before') sizes.push([390,844,1000]);
   for (const [width, height, stress] of sizes) {
     const page = await browser.newPage({
       ...(width < 500 ? devices['iPhone 13'] : {}), viewport: {width, height}, reducedMotion: 'reduce'
@@ -59,11 +59,11 @@ try {
       assert.equal(m.rect.width,width);
       assert.equal(m.rect.height,height);
       assert.equal(m.glError,0);
-      if (phase === 'after') assert.ok(m.buffer[0]*m.buffer[1] <= 2000000);
+      if (phase !== 'before') assert.ok(m.buffer[0]*m.buffer[1] <= 2000000);
     };
     await measure('overview');
     await page.screenshot({path: dir + '/' + name + '.png'});
-    if (width === 390 && !stress && phase === 'after') {
+    if (width === 390 && !stress && phase !== 'before') {
       const client = await page.context().newCDPSession(page);
       const projected = () => page.locator('.tier-domain').evaluateAll(nodes => nodes.map(n=>n.style.transform).join('|'));
       const gesture = async (start, end) => {

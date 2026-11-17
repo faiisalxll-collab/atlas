@@ -41,6 +41,14 @@ try {
           await page.locator('.atlas-list-card').first().tap();
         } else {
           const domain = page.locator('[data-node-id="dom:Intelligence"]');
+          await page.locator('.tier-domain').first().waitFor({state:'attached'});
+          console.log(engine.name(), 'initial viewport', await page.evaluate(() => ({
+            window: [innerWidth, innerHeight], viewport: [visualViewport.width, visualViewport.height],
+            canvas: document.querySelector('canvas').getBoundingClientRect().toJSON(),
+            buffer: [document.querySelector('canvas').width,document.querySelector('canvas').height],
+            domains: [...document.querySelectorAll('.tier-domain')].map(el=>[el.textContent,el.style.display,el.style.transform]),
+            hud: [...document.querySelectorAll('.atlas-topbar,.atlas-subbar,.atlas-controls-dock')].map(el=>el.getBoundingClientRect().toJSON())
+          })));
           await domain.waitFor();
           const canvas = page.locator('#universe-canvas');
           const centerLit = await canvas.evaluate(el => new Promise(done => requestAnimationFrame(() => {

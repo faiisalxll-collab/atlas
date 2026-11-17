@@ -39,8 +39,18 @@ jobs:
         if: always()
         with:
           name: atlas-before
+          retention-days: 7
           path: audit/before
       - run: node scripts/browser-test.mjs
+      - name: Verify release at all viewport sizes before publishing
+        run: |
+          npm run preview -- --port 4173 --strictPort > /tmp/atlas-preview.log 2>&1 &
+          trap 'kill $!' EXIT
+          for attempt in {1..25}; do
+            curl -fsS http://localhost:4173/atlas/ >/dev/null && break
+            sleep 1
+          done
+          ATLAS_AUDIT_URL=http://localhost:4173/atlas/ node scripts/viewport-audit.mjs candidate
       - uses: actions/upload-artifact@v4
         with:
           name: atlas-dist
@@ -104,4 +114,5 @@ jobs:
         if: always()
         with:
           name: atlas-after
+          retention-days: 7
           path: audit/after

@@ -461,3 +461,26 @@ body,
   background: var(--surface-elevated);
   border-color: var(--border-accent);
 }
+
+.atlas-head-stack { display: contents; }
+
+@media (max-width: 768px) {
+  .atlas-head-stack {
+    display: grid;
+    position: fixed;
+    top: max(8px, env(safe-area-inset-top));
+    inset-inline: 8px;
+    gap: 5px;
+    z-index: 18;
+    pointer-events: none;
+  }
+  .atlas-head-stack .atlas-topbar { position: relative; inset: auto; pointer-events: auto; }
+  .atlas-head-stack .atlas-subbar { position: static; min-width: 0; }
+  .atlas-breadcrumb:has(> :only-child) { display: none; }
+  .atlas-breadcrumb { max-width: 100%; overflow: auto; white-space: nowrap; }
+  .atlas-trails-bar { padding: 3px 8px; }
+  .atlas-controls-dock { bottom: max(8px, env(safe-area-inset-bottom)); }
+  #ctrl-toggle-hud { order: -1; }
+  .atlas-inspector { max-height: 58dvh; }
+  .atlas-3d-label.tier-domain { max-width: 135px; overflow: hidden; text-overflow: ellipsis; }
+}

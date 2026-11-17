@@ -50,6 +50,7 @@ export class UniverseScene {
   private nodeStates = new Map<string, AnimatedNodeState>();
   private repoIdOrder: string[] = [];
   private instanceIdToRepoNode = new Map<number, SpatialNode>();
+  private labelOrder: string[] = [];
   private labelElements = new Map<string, HTMLButtonElement>();
 
   // Expansion & selection state
@@ -169,7 +170,7 @@ export class UniverseScene {
     this.coreGroup = new THREE.Group();
     const coreSphere = new THREE.Mesh(
       new THREE.SphereGeometry(1.55, 24, 24),
-      new THREE.MeshBasicMaterial({ color: 0xf6f5f1 })
+      new THREE.MeshBasicMaterial({ color: 0xfff2d8, fog: false })
     );
     const ringGeo = new THREE.RingGeometry(2.45, 2.65, 64);
     const ringMat = new THREE.MeshBasicMaterial({
@@ -180,6 +181,24 @@ export class UniverseScene {
     });
     const ringMesh = new THREE.Mesh(ringGeo, ringMat);
     ringMesh.rotation.x = Math.PI / 2.3;
+    const haloCanvas = document.createElement('canvas');
+    haloCanvas.width = haloCanvas.height = 64;
+    const ctx = haloCanvas.getContext('2d');
+    if (ctx) {
+      const light = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      light.addColorStop(0, 'rgba(255,235,192,.85)');
+      light.addColorStop(.25, 'rgba(249,206,144,.46)');
+      light.addColorStop(.6, 'rgba(207,159,98,.12)');
+      light.addColorStop(1, 'rgba(207,159,98,0)');
+      ctx.fillStyle = light;
+      ctx.fillRect(0, 0, 64, 64);
+      const halo = new THREE.Sprite(new THREE.SpriteMaterial({
+        map: new THREE.CanvasTexture(haloCanvas), blending: THREE.AdditiveBlending,
+        depthWrite: false, fog: false
+      }));
+      halo.scale.setScalar(12);
+      this.coreGroup.add(halo);
+    }
     this.coreGroup.add(coreSphere, ringMesh);
     this.scene.add(this.coreGroup);
 
@@ -352,7 +371,7 @@ export class UniverseScene {
       const node = this.graphEngine.nodes.get(id);
       if (!node) continue;
       if (node.tier === 'domain') {
-        el.textContent = lang === 'ar' && node.labelAr ? `${node.label} · ${node.labelAr}` : node.label;
+        el.textContent = lang === 'ar' && node.labelAr ? node.labelAr : node.label;
       } else if (node.tier === 'category') {
         el.textContent = `${node.label} (${node.childCount})`;
       } else {
@@ -514,6 +533,14 @@ export class UniverseScene {
         }
       }
     }
+    const priority = (id: string): number => id === this.selectedNodeId ? 0 :
+      id.startsWith('dom:') ? 1 : id.startsWith('cat:') ? 2 : 3;
+    this.labelOrder = [];
+    for (const [id, el] of this.labelElements) {
+      if (this.nodeStates.get(id)?.visible) this.labelOrder.push(id);
+      else el.style.display = 'none';
+    }
+    this.labelOrder.sort((a, b) => priority(a) - priority(b));
   }
 
   private handleNodeActivation(node: SpatialNode): void {
@@ -843,35 +870,24 @@ export class UniverseScene {
     // Collision avoidance grid (screen-space bounding boxes)
     const placedBoxes: Array<{ left: number; right: number; top: number; bottom: number }> = [];
 
-    // Sort labels by priority: selected -> domain -> category -> repository
-    const entries = Array.from(this.labelElements.entries());
-    entries.sort((a, b) => {
-      const prio = (id: string): number => {
-        if (id === this.selectedNodeId) return 0;
-        if (id.startsWith('dom:')) return 1;
-        if (id.startsWith('cat:')) return 2;
-        return 3;
-      };
-      return prio(a[0]) - prio(b[0]);
-    });
-
-    for (const [id, el] of entries) {
+    for (const id of this.labelOrder) {
+      const el = this.labelElements.get(id)!;
       const st = this.nodeStates.get(id);
       if (!st || !st.visible || st.currentScale < 0.25) {
-        el.style.display = 'none';
+        if (el.style.display !== 'none') el.style.display = 'none';
         continue;
       }
 
       // Semantic Zoom LOD thresholds with hysteresis
       if (st.node.tier === 'repository' && camDist > 68 && id !== this.selectedNodeId) {
-        el.style.display = 'none';
+        if (el.style.display !== 'none') el.style.display = 'none';
         continue;
       }
 
       this.projVec.copy(st.currentPos).project(this.camera);
       // Behind camera check
       if (Math.abs(this.projVec.z) > 1) {
-        el.style.display = 'none';
+        if (el.style.display !== 'none') el.style.display = 'none';
         continue;
       }
 
@@ -879,16 +895,19 @@ export class UniverseScene {
       const sy = (-this.projVec.y * 0.5 + 0.5) * height;
 
       if (sx < 0 || sx > width || sy < labelTop || sy > labelBottom) {
-        el.style.display = 'none';
+        if (el.style.display !== 'none') el.style.display = 'none';
         continue;
       }
 
       // Prevent label overlap on screen
       const boxW = st.node.tier === 'domain' ? 135 : 105;
       const boxH = 24;
+      const labelX = st.node.tier === 'domain'
+        ? THREE.MathUtils.clamp(sx, boxW / 2 + 4, width - boxW / 2 - 4)
+        : sx;
       const box = {
-        left: sx - boxW / 2,
-        right: sx + boxW / 2,
+        left: labelX - boxW / 2,
+        right: labelX + boxW / 2,
         top: sy + 8,
         bottom: sy + 8 + boxH,
       };
@@ -907,13 +926,14 @@ export class UniverseScene {
         );
 
       if (overlaps) {
-        el.style.display = 'none';
+        if (el.style.display !== 'none') el.style.display = 'none';
         continue;
       }
 
       placedBoxes.push(box);
-      el.style.display = 'block';
-      el.style.transform = `translate3d(${sx.toFixed(1)}px, ${(sy + 10).toFixed(1)}px, 0) translateX(-50%)`;
+      if (el.style.display !== 'block') el.style.display = 'block';
+      const transform = `translate3d(${labelX.toFixed(1)}px, ${(sy + 10).toFixed(1)}px, 0) translateX(-50%)`;
+      if (el.style.transform !== transform) el.style.transform = transform;
       el.classList.toggle('is-selected', isSelected);
     }
   }
@@ -942,6 +962,20 @@ export class UniverseScene {
     this.canvas.removeEventListener('pointerdown', this.onPointerDown);
     this.canvas.removeEventListener('pointerup', this.onPointerUp);
     this.controls.dispose();
+    const geometries = new Set<THREE.BufferGeometry>();
+    const materials = new Set<THREE.Material>();
+    this.scene.traverse(object => {
+      if (object instanceof THREE.Sprite) {
+        object.material.map?.dispose();
+        materials.add(object.material);
+      } else if (object instanceof THREE.Mesh || object instanceof THREE.Line || object instanceof THREE.Points) {
+        geometries.add(object.geometry);
+        for (const material of [object.material].flat()) materials.add(material);
+      }
+    });
+    this.starInstancedMesh.dispose();
+    geometries.forEach(geometry => geometry.dispose());
+    materials.forEach(material => material.dispose());
     this.renderer.dispose();
   }
 }

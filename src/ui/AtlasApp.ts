@@ -200,6 +200,7 @@ export class AtlasApp {
     }
 
     this.hudRoot.innerHTML = `
+      <div class="atlas-head-stack">
       <header class="atlas-topbar" role="banner">
         <div class="atlas-brand">
           <span class="atlas-logo-dot"></span>
@@ -266,6 +267,7 @@ export class AtlasApp {
           : ''
       }
 
+      </div>
       ${this.renderInspectorHtml(isAr)}
       ${this.viewMode === 'list' ? this.renderListViewHtml(isAr) : ''}
 
