@@ -69,6 +69,7 @@ export class UniverseScene {
   // Raycasting & pointer tracking
   private raycaster = new THREE.Raycaster();
   private pointer = new THREE.Vector2();
+  private overviewFraming = true;
   private viewportWidth = 0;
   private viewportHeight = 0;
   private resizeObserver = new ResizeObserver(() => this.onResize());
@@ -138,6 +139,7 @@ export class UniverseScene {
 
     // Cancel automatic camera flight when user manually interacts
     this.controls.addEventListener('start', () => {
+      this.overviewFraming = false;
       this.camGoalPos = null;
       this.camGoalTarget = null;
     });
@@ -470,6 +472,7 @@ export class UniverseScene {
 
   public resetCamera(): void {
     this.flyToPosition({ x: 0, y: 0, z: 0 }, this.overviewDistance());
+    this.overviewFraming = true;
   }
 
   public zoomStep(deltaFactor: number): void {
@@ -483,6 +486,7 @@ export class UniverseScene {
   }
 
   public flyToPosition(target: Position3D, distance: number): void {
+    this.overviewFraming = false;
     const goalT = new THREE.Vector3(target.x, target.y, target.z);
     const dir = this.camera.position.clone().sub(this.controls.target);
     if (dir.lengthSq() < 0.001) dir.set(0, 0.3, 1);
@@ -599,6 +603,14 @@ export class UniverseScene {
     this.renderer.setDrawingBufferSize(width, height, ratio);
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
+    if (this.controls && this.overviewFraming) {
+      // Mobile WebKit can report the initial layout viewport before the CSS viewport settles.
+      this.camGoalPos = null;
+      this.camGoalTarget = null;
+      this.controls.target.set(0, 0, 0);
+      this.camera.position.set(0, 26, this.overviewDistance());
+      this.controls.update();
+    }
   };
 
   private onPointerDown = (e: PointerEvent): void => {
