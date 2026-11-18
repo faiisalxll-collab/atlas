@@ -1095,23 +1095,35 @@
       "y": -33.0,
       "z": -18.0
     },
+    "indexable-inc__blaze": {
+      "category": "Developer Tools",
+      "x": 2.61,
+      "y": -24.3,
+      "z": 37.121
+    },
+    "haydenschmitty__floorplan": {
+      "category": "Developer Tools",
+      "x": -4.899,
+      "y": -28.05,
+      "z": 28.34
+    },
     "erkamyaman__rust-anything": {
       "category": "Developer Tools",
-      "x": 6.689,
-      "y": -30.3,
-      "z": 29.349
+      "x": -3.032,
+      "y": -31.05,
+      "z": 26.583
     },
     "astral-sh__ty": {
       "category": "Developer Tools",
-      "x": 5.269,
-      "y": -34.467,
-      "z": 37.022
+      "x": 4.312,
+      "y": -34.8,
+      "z": 28.81
     },
     "vercel-labs__ui": {
       "category": "Developer Tools",
-      "x": -4.426,
-      "y": -35.3,
-      "z": 36.262
+      "x": 2.758,
+      "y": -35.55,
+      "z": 38.019
     },
     "microsoft__markitdown": {
       "category": "Document AI",
@@ -1119,11 +1131,23 @@
       "y": -34.9,
       "z": 24.493
     },
+    "lemonadesaltbagel__airlock": {
+      "category": "Local AI",
+      "x": -36.63,
+      "y": 18.625,
+      "z": 19.899
+    },
     "huawei-csl__macaq": {
       "category": "Local AI",
-      "x": -45.393,
-      "y": 8.625,
-      "z": 18.667
+      "x": -32.589,
+      "y": 8.24,
+      "z": 16.183
+    },
+    "diygod__pinky": {
+      "category": "Mobile AI",
+      "x": -3.104,
+      "y": -39.5,
+      "z": 28.828
     },
     "zyphra__zonos3-mini": {
       "category": "Voice AI",
