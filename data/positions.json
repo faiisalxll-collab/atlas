@@ -1095,6 +1095,30 @@
       "y": -33.0,
       "z": -18.0
     },
+    "mdiri-ai__soduwork": {
+      "category": "AI Agents",
+      "x": 31.6,
+      "y": 16.0,
+      "z": 18.0
+    },
+    "devvmhq__devvm": {
+      "category": "Cloud Infrastructure",
+      "x": -25.329,
+      "y": 27.25,
+      "z": 25.921
+    },
+    "yorkeccak__globalhackmap": {
+      "category": "Cybersecurity",
+      "x": 11.308,
+      "y": 22.643,
+      "z": -28.828
+    },
+    "islandmed__sculptforge": {
+      "category": "Design AI",
+      "x": -29.003,
+      "y": -8.25,
+      "z": -21.763
+    },
     "indexable-inc__blaze": {
       "category": "Developer Tools",
       "x": 2.61,
@@ -1148,6 +1172,12 @@
       "x": -3.104,
       "y": -39.5,
       "z": 28.828
+    },
+    "desklabs-opensource__deskvoice": {
+      "category": "Voice AI",
+      "x": 35.959,
+      "y": -19.765,
+      "z": -15.228
     },
     "zyphra__zonos3-mini": {
       "category": "Voice AI",
