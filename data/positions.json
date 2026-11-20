@@ -1121,39 +1121,51 @@
     },
     "indexable-inc__blaze": {
       "category": "Developer Tools",
-      "x": 2.61,
-      "y": -24.3,
-      "z": 37.121
+      "x": 2.561,
+      "y": -24.229,
+      "z": 37.038
     },
     "haydenschmitty__floorplan": {
       "category": "Developer Tools",
-      "x": -4.899,
-      "y": -28.05,
-      "z": 28.34
+      "x": -4.838,
+      "y": -27.8,
+      "z": 28.397
     },
     "erkamyaman__rust-anything": {
       "category": "Developer Tools",
-      "x": -3.032,
-      "y": -31.05,
-      "z": 26.583
+      "x": -3.044,
+      "y": -30.657,
+      "z": 26.557
+    },
+    "microsoft__tokeneconomizer": {
+      "category": "Developer Tools",
+      "x": -6.097,
+      "y": -34.229,
+      "z": 33.253
     },
     "astral-sh__ty": {
       "category": "Developer Tools",
-      "x": 4.312,
-      "y": -34.8,
-      "z": 28.81
+      "x": 0.335,
+      "y": -34.943,
+      "z": 39.154
     },
     "vercel-labs__ui": {
       "category": "Developer Tools",
-      "x": 2.758,
-      "y": -35.55,
-      "z": 38.019
+      "x": -4.637,
+      "y": -35.657,
+      "z": 31.461
     },
     "microsoft__markitdown": {
       "category": "Document AI",
       "x": 6.982,
       "y": -34.9,
       "z": 24.493
+    },
+    "beckettharriman__openfill": {
+      "category": "Image AI",
+      "x": -22.37,
+      "y": -16.0,
+      "z": -17.745
     },
     "lemonadesaltbagel__airlock": {
       "category": "Local AI",
@@ -1172,6 +1184,12 @@
       "x": -3.104,
       "y": -39.5,
       "z": 28.828
+    },
+    "aryamandarda__tamserve": {
+      "category": "Video AI",
+      "x": -37.335,
+      "y": -30.0,
+      "z": -20.641
     },
     "desklabs-opensource__deskvoice": {
       "category": "Voice AI",
