@@ -1109,51 +1109,75 @@
     },
     "yorkeccak__globalhackmap": {
       "category": "Cybersecurity",
-      "x": 11.308,
-      "y": 22.643,
-      "z": -28.828
+      "x": 12.523,
+      "y": 24.25,
+      "z": -28.547
+    },
+    "tracebit-com__turingpot": {
+      "category": "Cybersecurity",
+      "x": 7.994,
+      "y": 20.5,
+      "z": -30.008
     },
     "islandmed__sculptforge": {
       "category": "Design AI",
-      "x": -29.003,
-      "y": -8.25,
-      "z": -21.763
+      "x": -28.609,
+      "y": -6.0,
+      "z": -22.52
+    },
+    "simpsoka__zigzag": {
+      "category": "Design AI",
+      "x": -30.2,
+      "y": -12.0,
+      "z": -16.0
+    },
+    "jazzenchen__agent-hud-open": {
+      "category": "Developer Tools",
+      "x": 2.092,
+      "y": -22.8,
+      "z": 33.264
     },
     "indexable-inc__blaze": {
       "category": "Developer Tools",
-      "x": 2.561,
-      "y": -24.229,
-      "z": 37.038
+      "x": -4.552,
+      "y": -24.757,
+      "z": 31.83
     },
     "haydenschmitty__floorplan": {
       "category": "Developer Tools",
-      "x": -4.838,
-      "y": -27.8,
-      "z": 28.397
+      "x": 7.435,
+      "y": -28.017,
+      "z": 33.388
+    },
+    "phuryn__product-engineering": {
+      "category": "Developer Tools",
+      "x": 5.855,
+      "y": -30.626,
+      "z": 38.283
     },
     "erkamyaman__rust-anything": {
       "category": "Developer Tools",
-      "x": -3.044,
-      "y": -30.657,
-      "z": 26.557
+      "x": -6.63,
+      "y": -31.278,
+      "z": 35.981
     },
     "microsoft__tokeneconomizer": {
       "category": "Developer Tools",
-      "x": -6.097,
-      "y": -34.229,
-      "z": 33.253
+      "x": -0.259,
+      "y": -34.539,
+      "z": 39.426
     },
     "astral-sh__ty": {
       "category": "Developer Tools",
-      "x": 0.335,
-      "y": -34.943,
-      "z": 39.154
+      "x": 5.959,
+      "y": -35.191,
+      "z": 33.72
     },
     "vercel-labs__ui": {
       "category": "Developer Tools",
-      "x": -4.637,
-      "y": -35.657,
-      "z": 31.461
+      "x": -1.852,
+      "y": -35.843,
+      "z": 37.838
     },
     "microsoft__markitdown": {
       "category": "Document AI",
