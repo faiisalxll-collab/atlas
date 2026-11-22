@@ -1191,6 +1191,12 @@
       "y": -16.0,
       "z": -17.745
     },
+    "mozilla-ai__otari": {
+      "category": "LLM Infrastructure",
+      "x": -23.65,
+      "y": 10.25,
+      "z": 10.696
+    },
     "lemonadesaltbagel__airlock": {
       "category": "Local AI",
       "x": -36.63,
@@ -1203,11 +1209,17 @@
       "y": 8.24,
       "z": 16.183
     },
+    "google__artemis": {
+      "category": "Mobile AI",
+      "x": 1.8,
+      "y": -32.0,
+      "z": 22.0
+    },
     "diygod__pinky": {
       "category": "Mobile AI",
-      "x": -3.104,
-      "y": -39.5,
-      "z": 28.828
+      "x": -2.191,
+      "y": -42.0,
+      "z": 15.277
     },
     "aryamandarda__tamserve": {
       "category": "Video AI",
