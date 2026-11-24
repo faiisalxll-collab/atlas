@@ -1101,6 +1101,12 @@
       "y": 16.0,
       "z": 18.0
     },
+    "open-compass__agentcompass": {
+      "category": "AI Evaluation",
+      "x": 43.254,
+      "y": 14.5,
+      "z": 12.545
+    },
     "devvmhq__devvm": {
       "category": "Cloud Infrastructure",
       "x": -25.329,
@@ -1208,6 +1214,18 @@
       "x": -32.589,
       "y": 8.24,
       "z": 16.183
+    },
+    "getmcpm__cli": {
+      "category": "MCP Security",
+      "x": 22.904,
+      "y": 16.5,
+      "z": -21.07
+    },
+    "saurabh-yergattikar__shieldmcp": {
+      "category": "MCP Security",
+      "x": 22.26,
+      "y": 12.75,
+      "z": -22.268
     },
     "google__artemis": {
       "category": "Mobile AI",
